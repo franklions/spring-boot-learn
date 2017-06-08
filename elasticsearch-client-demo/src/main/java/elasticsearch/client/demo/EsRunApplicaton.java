@@ -1,8 +1,9 @@
 package elasticsearch.client.demo;
 
-import elasticsearch.client.demo.service.ESUtils;
+import elasticsearch.client.demo.domain.Employee;
+import elasticsearch.client.demo.service.EmployeeService;
 
-import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author Administrator
@@ -14,14 +15,14 @@ import java.io.IOException;
 public class EsRunApplicaton {
 
     public static void main(String[] args) {
-        System.out.println(">>>>>>>>>>>>>>create index begin>>>>>>>>>>>>");
-        ESUtils.createIndex();
+        EmployeeService employeeService = new EmployeeService();
+        employeeService.addEmployee(new Employee(1,"John"
+                ,"Smith",25,"I love to go rock climbing", Arrays.asList("sports","music")));
 
-        System.out.println(">>>>>>>>>>>>>>create index end>>>>>>>>>>>>");
-        try {
-           int a =System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        employeeService.addEmployee(new Employee(2,"Jane"
+                ,"Smith",32,"I like to collect rock albums", Arrays.asList("music")));
+
+        employeeService.addEmployee(new Employee(3,"Douglas"
+                ,"Fir",35,"I like to build cabinets", Arrays.asList("forestry")));
     }
 }
