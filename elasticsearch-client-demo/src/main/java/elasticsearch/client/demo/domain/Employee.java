@@ -10,14 +10,14 @@ import java.util.List;
  * @since Jdk 1.8
  */
 public class Employee {
-    private int id;
+    private Integer id;
     private String first_name;
     private String last_name;
-    private int age ;
+    private Integer age ;
     private String about;
     private List<String> interests;
 
-    public Employee(int id, String firstname, String lastname, int age, String about, List<String> interests) {
+    public Employee(Integer id, String firstname, String lastname, Integer age, String about, List<String> interests) {
         this.id = id;
         this.first_name = firstname;
         this.last_name = lastname;
@@ -26,11 +26,11 @@ public class Employee {
         this.interests = interests;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -50,11 +50,11 @@ public class Employee {
         this.last_name = last_name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
