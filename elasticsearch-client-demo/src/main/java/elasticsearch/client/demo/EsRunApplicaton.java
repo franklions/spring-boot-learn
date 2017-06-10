@@ -17,10 +17,6 @@ public class EsRunApplicaton {
     public static void main(String[] args) {
         EmployeeService employeeService = new EmployeeService();
 
-        employeeService.deleteEmployee(1);
-        employeeService.deleteEmployee(1);
-        employeeService.deleteEmployee(1);
-
         employeeService.addEmployee(new Employee(1,"John"
                 ,"Smith",25,"I love to go rock climbing", Arrays.asList("sports","music")));
 
