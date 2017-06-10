@@ -2,16 +2,16 @@ package elasticsearch.client.demo.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import elasticsearch.client.demo.config.TransportClientConfig;
-import elasticsearch.client.demo.domain.Employee;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.ListenableActionFuture;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.util.Date;
 
+import static elasticsearch.client.demo.config.TransportClientConfig.getTransportClient;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
@@ -39,7 +39,7 @@ public class ESUtils {
                     .field("postDate", new Date())
                     .field("message", "Hi Elasticsearch")
                     .endObject();
-           ListenableActionFuture<IndexResponse> responseFuture= TransportClientConfig.getTransportClient()
+           ListenableActionFuture<IndexResponse> responseFuture= getTransportClient()
                     .prepareIndex("twitter","tweet","3")
                     .setSource(builder)
                     .execute();
@@ -76,14 +76,15 @@ public class ESUtils {
         }
     }
 
-    public static boolean indexDocument(Employee employee) {
+    public static <T> boolean indexDocument( String id, T source) {
 
         try {
-            String docJsonStr = mapper.writeValueAsString(employee);
 
-            IndexResponse response= TransportClientConfig.getTransportClient()
+            String docJsonStr = mapper.writeValueAsString(source);
+
+            IndexResponse response= getTransportClient()
                     .prepareIndex(INDEX_NAME,TYPE_NAME)
-                    .setId(Integer.toString(employee.getId()))
+                    .setId(id)
                     .setSource(docJsonStr)
                     .execute().actionGet();
             return response.status().getStatus() > 0;
@@ -91,5 +92,11 @@ public class ESUtils {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static boolean deleteDocument(String id) {
+        DeleteResponse response = getTransportClient().prepareDelete(INDEX_NAME,TYPE_NAME,id).execute().actionGet();
+
+        return response.status().getStatus() > 0;
     }
 }

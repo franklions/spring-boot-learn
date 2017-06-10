@@ -22,6 +22,9 @@ public class TransportClientConfig   {
      * 并以轮询的方式与这些地址进行通信。
      * @return
      */
+    private static final TransportClientProperties transportClientProperties = new TransportClientProperties();
+
+
     private  static TransportClient client = null;
 
     public static TransportClient getTransportClient()  {
@@ -33,7 +36,7 @@ public class TransportClientConfig   {
         if(client == null){
             try {
                 client = new PreBuiltTransportClient(Settings.EMPTY)
-                        .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.63.128"), 9300));
+                        .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(transportClientProperties.getHost()), transportClientProperties.getPort()));
 
             } catch (UnknownHostException e) {
                 e.printStackTrace();

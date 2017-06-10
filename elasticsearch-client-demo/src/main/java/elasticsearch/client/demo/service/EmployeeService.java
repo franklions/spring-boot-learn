@@ -13,6 +13,10 @@ import elasticsearch.client.demo.domain.Employee;
 public class EmployeeService {
 
     public boolean addEmployee(Employee employee){
-             return ESUtils.indexDocument(employee);
+             return ESUtils.indexDocument(employee.getId().toString(),employee);
+    }
+
+    public boolean deleteEmployee(Integer id){
+            return ESUtils.deleteDocument(id.toString());
     }
 }
