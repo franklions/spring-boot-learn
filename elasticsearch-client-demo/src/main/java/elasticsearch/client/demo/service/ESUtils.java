@@ -3,16 +3,23 @@ package elasticsearch.client.demo.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import elasticsearch.client.demo.domain.Employee;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.get.MultiGetItemResponse;
+import org.elasticsearch.action.get.MultiGetResponse;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.search.SearchHit;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static elasticsearch.client.demo.config.TransportClientConfig.getTransportClient;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
@@ -130,5 +137,45 @@ public class ESUtils {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static  <T> List<T> multiGetDocumnet(TypeReference<T> typeref) {
+        MultiGetResponse responses = getTransportClient().prepareMultiGet()
+                .add(INDEX_NAME,TYPE_NAME,"1","2","3")
+                .get();
+        List<T> returnList = new ArrayList<T>();
+        for(MultiGetItemResponse itemResponse :responses){
+            GetResponse response = itemResponse.getResponse();
+            if(response.isExists()){
+                T instance = null;
+                try {
+                    instance = mapper.readValue(response.getSourceAsString(),typeref);
+                    returnList.add(instance);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return returnList;
+    }
+
+    public static <T> List<T> searchDocument(TypeReference<T> typeref){
+        SearchResponse searchResponse = getTransportClient().prepareSearch(INDEX_NAME)
+                .setTypes(TYPE_NAME)
+                .get();
+
+        List<T> returnList = new ArrayList<T>();
+        for(SearchHit searchHit :searchResponse.getHits()){
+            T instance = null;
+            try {
+                instance = mapper.readValue( searchHit.getSourceAsString(),typeref);
+                returnList.add(instance);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return returnList;
     }
 }

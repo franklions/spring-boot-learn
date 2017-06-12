@@ -3,6 +3,8 @@ package elasticsearch.client.demo.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import elasticsearch.client.demo.domain.Employee;
 
+import java.util.List;
+
 /**
  * @author Administrator
  * @version 1.0
@@ -27,5 +29,9 @@ public class EmployeeService {
 
     public boolean updateEmployee(Employee employee){
         return ESUtils.updateDocument(employee.getId().toString(),employee);
+    }
+
+    public List<Employee> searchEmployee(){
+        return ESUtils.searchDocument(new TypeReference<Employee>() {});
     }
 }
