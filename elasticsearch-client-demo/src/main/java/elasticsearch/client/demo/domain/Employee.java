@@ -17,6 +17,9 @@ public class Employee {
     private String about;
     private List<String> interests;
 
+    public Employee() {
+    }
+
     public Employee(Integer id, String firstname, String lastname, Integer age, String about, List<String> interests) {
         this.id = id;
         this.first_name = firstname;
@@ -72,5 +75,17 @@ public class Employee {
 
     public void setInterests(List<String> interests) {
         this.interests = interests;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", age=" + age +
+                ", about='" + about + '\'' +
+                ", interests=" + interests +
+                '}';
     }
 }

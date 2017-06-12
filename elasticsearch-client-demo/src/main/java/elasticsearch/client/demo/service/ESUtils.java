@@ -1,11 +1,14 @@
 package elasticsearch.client.demo.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.ListenableActionFuture;
 import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 
 import java.io.IOException;
@@ -98,5 +101,34 @@ public class ESUtils {
         DeleteResponse response = getTransportClient().prepareDelete(INDEX_NAME,TYPE_NAME,id).execute().actionGet();
 
         return response.status().getStatus() > 0;
+    }
+
+    public static <T> T getDocument(String id,TypeReference<T> typeref) {
+        GetResponse response = getTransportClient().prepareGet(INDEX_NAME,TYPE_NAME,id).execute().actionGet();
+
+        T instance = null;
+        try {
+            instance = mapper.readValue(response.getSourceAsString(),typeref);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return   instance;
+    }
+
+    public static <T> boolean updateDocument( String id, T source) {
+
+        try {
+
+            String docJsonStr = mapper.writeValueAsString(source);
+
+            UpdateResponse response= getTransportClient()
+                    .prepareUpdate(INDEX_NAME,TYPE_NAME,id)
+                    .setDoc(docJsonStr)
+                    .execute().actionGet();
+            return response.status().getStatus() > 0;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

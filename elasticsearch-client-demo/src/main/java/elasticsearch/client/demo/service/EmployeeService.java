@@ -1,5 +1,6 @@
 package elasticsearch.client.demo.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import elasticsearch.client.demo.domain.Employee;
 
 /**
@@ -18,5 +19,13 @@ public class EmployeeService {
 
     public boolean deleteEmployee(Integer id){
             return ESUtils.deleteDocument(id.toString());
+    }
+
+    public Employee getEmployee(Integer id){
+            return ESUtils.getDocument(id.toString(), new TypeReference<Employee>() {});
+    }
+
+    public boolean updateEmployee(Employee employee){
+        return ESUtils.updateDocument(employee.getId().toString(),employee);
     }
 }
