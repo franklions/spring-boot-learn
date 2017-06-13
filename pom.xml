@@ -15,6 +15,8 @@
         <module>spring-boot-learn-resttemplate-demo</module>
         <module>spring-boot-learn-commons-pool2-demo</module>
         <module>elasticsearch-client-demo</module>
+        <module>java-async-completable-future</module>
+        <module>spring-boot-learn-filter-demo</module>
     </modules>
 
     <parent>
