@@ -10,6 +10,7 @@ import java.util.Properties;
  */
 public class TransportClientProperties {
 
+    private static final String PROPERTIES_PREFIXED="elasticsearch.transport.client.";
     private static final String HOST_KEY="host";
     private static final String PORT_KEY = "port";
     private String host;
@@ -23,8 +24,8 @@ public class TransportClientProperties {
                     .getResourceAsStream("elasticsearch.properties");
 
             properties.load(in);
-            this.host = properties.getProperty(HOST_KEY);
-            this.port = Integer.parseInt( properties.getProperty(PORT_KEY));
+            this.host = properties.getProperty(PROPERTIES_PREFIXED+HOST_KEY);
+            this.port = Integer.parseInt( properties.getProperty(PROPERTIES_PREFIXED+PORT_KEY));
             in.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
