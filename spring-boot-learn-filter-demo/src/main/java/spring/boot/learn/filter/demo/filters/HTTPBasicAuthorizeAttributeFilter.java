@@ -1,9 +1,11 @@
 package spring.boot.learn.filter.demo.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.core.config.Order;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,6 +20,8 @@ import java.util.Set;
  * @date 2017/6/13
  * @since Jdk 1.8
  */
+@WebFilter(filterName = "hTTPBasicAuthorizeAttributeFilter",urlPatterns = "/*")
+@Order(Integer.MIN_VALUE)
 public class HTTPBasicAuthorizeAttributeFilter implements Filter {
 
     private static String Name = "test";
@@ -34,6 +38,13 @@ public class HTTPBasicAuthorizeAttributeFilter implements Filter {
             throws IOException, ServletException {
         // TODO Auto-generated method stub
 
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET,DELETE,PUT,OPTIONS");
+        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,DeveloperId,Token,Scope,sessionId,ticketId");
+
+
         ResultStatusCode resultStatusCode = checkHTTPBasicAuthorize(request);
 //        ServletResponse newResponse = createServletRResponse(response);
         if (resultStatusCode != ResultStatusCode.OK)
@@ -49,7 +60,7 @@ public class HTTPBasicAuthorizeAttributeFilter implements Filter {
         }
         else
         {
-            chain.doFilter(request, response);
+            chain.doFilter(request, httpServletResponse);
         }
     }
 

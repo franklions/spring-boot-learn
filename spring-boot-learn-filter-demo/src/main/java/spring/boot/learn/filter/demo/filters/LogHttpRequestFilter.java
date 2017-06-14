@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iemylife.iot.logging.IotLogger;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @date 2017/6/13
  * @since Jdk 1.8
  */
+//@WebFilter(filterName = "logHttpRequestFilter")
 public class LogHttpRequestFilter implements Filter {
 
     private static final String LOG_MESSAGE_KEY_REQUESTURL="requestUrl";
