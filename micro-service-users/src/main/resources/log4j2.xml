@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Properties>
+		<Property name="PID">????</Property>
+		<Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
+		<Property name="LOG_LEVEL_PATTERN">%5p</Property>
+		<Property name="CONSOLE_LOG_PATTERN">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{${LOG_LEVEL_PATTERN}} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+		<Property name="FILE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN} ${sys:PID} --- [%t] %-40.40c{1.} : %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+		<Property name="PLATFORM_NAME">Yggdrasil</Property>
+		<Property name="PLATFORM_PROJECT"></Property>
+		<Property name="PLATFORM_LOG_PATTERN" >${PLATFORM_NAME} 1 %d{UNIX_MILLIS}{UTC} %level ${hostName} ${PLATFORM_PROJECT} 1 %msg%n</Property>
+		<!-- File base path -->
+		<property name="LOG_HOME">logs</property>
+		<!-- App server name -->
+		<property name="SERVER_NAME">user-service</property>
+		<!-- Backup file path -->
+		<property name="BACKUP_HOME">${LOG_HOME}/backup</property>
+		<property name="SYS_LOG_FILE">${LOG_HOME}/sys</property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${sys:CONSOLE_LOG_PATTERN}" />
+		</Console>
+		<RollingFile name="File" fileName="${sys:SYS_LOG_FILE}" filePattern="${LOG_HOME}/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.log.gz">
+			<PatternLayout>
+				<Pattern>${sys:FILE_LOG_PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+		</RollingFile>
+		<Console name="Platform_Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${PLATFORM_LOG_PATTERN}" />
+		</Console>
+		<RollingFile name="Platform_File"  fileName="${LOG_HOME}/${SERVER_NAME}"
+					 filePattern="${LOG_HOME}/${SERVER_NAME}.%d{yyyy-MM-dd-HH}.log" append="true">
+			<PatternLayout>
+				<Pattern>${PLATFORM_LOG_PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true" interval="24"/>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20"/>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<!-- Spring Loggers -->
+		<logger name="org.springframework" level="error"/>
+		<logger name="org.springframework.beans" level="error"/>
+		<logger name="org.springframework.core" level="error"/>
+		<logger name="org.springframework.context" level="error"/>
+		<logger name="org.springframework.web" level="error"/>
+		<logger name="org.springframework.batch" level="error"/>
+		<logger name="org.springframework.integration" level="error"/>
+
+		<!-- Apache Loggers -->
+		<logger name="org.apache" level="error"/>
+		<logger name="org.apache.http" level="error"/>
+		<logger name="org.apache.shiro" level="error"/>
+		<logger name="org.apache.solr" level="error"/>
+		<logger name="org.apache.lucene" level="error"/>
+		<logger name="org.apache.tomcat" level="error"/>
+		<logger name="org.apache.commons" level="error"/>
+
+		<!-- MyBatis Loggers -->
+		<logger name="org.mybatis" level="error"/>
+		<logger name="org.apache.ibatis" level="error"/>
+
+		<!-- App Loggers -->
+		<logger name="micro.service.users" level="all" additivity="false" >
+			<AppenderRef ref="Platform_Console" />
+			<AppenderRef ref="Platform_File" />
+		</logger>
+
+		<!-- Root Logger -->
+		<Root level="error">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="File" />
+		</Root>
+	</Loggers>
+</Configuration>

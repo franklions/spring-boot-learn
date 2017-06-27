@@ -17,6 +17,7 @@
         <module>elasticsearch-client-demo</module>
         <module>java-async-completable-future</module>
         <module>spring-boot-learn-filter-demo</module>
+        <module>micro-service-users</module>
     </modules>
 
     <parent>

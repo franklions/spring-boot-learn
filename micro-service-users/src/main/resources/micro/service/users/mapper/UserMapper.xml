@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2016 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="micro.service.users.mapper.UserMapper">
+    <resultMap id="userMap" type="User">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="getUser" resultType="User">
+        select id,name,age from users where id = #{id}
+    </select>
+    <select id="getUserByName" resultMap="userMap" >
+        select * from users where name like concat('%',#{name},'%')
+    </select>
+
+    <select id="getAllList" resultMap="userMap">
+        select id,name,age from users
+    </select>
+    <insert id="insert" parameterType="micro.service.users.domain.User"
+    useGeneratedKeys="true" keyProperty="user.id">
+        insert into users (name,age) values (#{user.name},#{user.age})
+    </insert>
+    <update id="update" parameterType="micro.service.users.domain.User">
+        update users set name=#{user.name},age=#{user.age} where id=#{key}
+    </update>
+    <delete id="delete" parameterType="micro.service.users.domain.User">
+        delete from users where id = #{id}
+    </delete>
+</mapper>
