@@ -1,15 +1,8 @@
 package micro.service.users;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInterceptor;
-import com.netflix.discovery.converters.Auto;
-import micro.service.users.domain.City;
-import micro.service.users.domain.User;
-import micro.service.users.logger.IPlatformLogger;
 import micro.service.users.mapper.CityMapper;
 import micro.service.users.mapper.UserMapper;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.annotation.MapperScan;
@@ -17,17 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 
-import java.util.List;
 import java.util.Properties;
 
 /**
  * Created by Administrator on 2016/12/1.
  */
 @SpringBootApplication
-@EnableEurekaClient
 @MapperScan("micro.service.users.mapper")
 public class UserApplication implements CommandLineRunner {
 
