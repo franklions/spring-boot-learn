@@ -15,6 +15,12 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class TestController {
+
+    @GetMapping("/get")
+    public String getTest(){
+        return "test values";
+    }
+
     @PostMapping("/test")
     public String test(@RequestParam("param") String str,@RequestBody Object body) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();

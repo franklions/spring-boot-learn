@@ -23,7 +23,7 @@ import java.util.List;
  * @since Jdk 1.8
  */
 @SpringBootApplication
-@ServletComponentScan
+//@ServletComponentScan
 public class FilterDemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(FilterDemoApplication.class,args);

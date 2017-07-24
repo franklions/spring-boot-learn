@@ -18,6 +18,7 @@
         <module>java-async-completable-future</module>
         <module>spring-boot-learn-filter-demo</module>
         <module>micro-service-users</module>
+        <module>spring-boot-learn-rabbitmq-demo</module>
     </modules>
 
     <parent>
