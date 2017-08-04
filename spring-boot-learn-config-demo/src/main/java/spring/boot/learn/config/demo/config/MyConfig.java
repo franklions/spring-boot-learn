@@ -18,6 +18,7 @@ import java.util.Map;
  */
 @Configuration
 @ConfigurationProperties("myconfig")
+@EnableConfigurationProperties(MyConfigProperties.class)
 public class MyConfig {
 
     @Value("${systemconfig.value.key}")
