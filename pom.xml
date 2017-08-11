@@ -19,6 +19,7 @@
         <module>spring-boot-learn-filter-demo</module>
         <module>micro-service-users</module>
         <module>spring-boot-learn-rabbitmq-demo</module>
+        <module>java-junit4-learn</module>
     </modules>
 
     <parent>

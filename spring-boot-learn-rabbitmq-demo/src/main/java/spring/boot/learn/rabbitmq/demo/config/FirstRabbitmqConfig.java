@@ -103,8 +103,8 @@ public class FirstRabbitmqConfig {
                                                     @Qualifier("firstQueue")Queue firstQueue
                                                     ,@Qualifier("firstConnectionFactory")  ConnectionFactory firstConnectionFactory,
                                                          @Qualifier("firstRabbitListenerContainerFactory") SimpleRabbitListenerContainerFactory firstRabbitListenerContainerFactory){
-//        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(firstConnectionFactory);
-        SimpleMessageListenerContainer container = firstRabbitListenerContainerFactory.createListenerContainer();
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(firstConnectionFactory);
+
         container.setQueues(firstQueue);
         container.setExposeListenerChannel(true );
         container.setMaxConcurrentConsumers(1);
