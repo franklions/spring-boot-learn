@@ -20,6 +20,7 @@
         <module>micro-service-users</module>
         <module>spring-boot-learn-rabbitmq-demo</module>
         <module>java-junit4-learn</module>
+        <module>spring-boot-learn-unittest-demo</module>
     </modules>
 
     <parent>
