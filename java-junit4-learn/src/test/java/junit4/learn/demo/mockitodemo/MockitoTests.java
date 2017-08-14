@@ -16,13 +16,26 @@ import static org.junit.Assert.*;
 /**
  * @author Administrator
  * @version 1.0
- * @description
  * @date 2017/8/10
  * @since Jdk 1.8
+ *  @description
+ *  1.验证某些行为
+ *  2.如何做一些测试桩 (Stub)
+ *  3.参数匹配器 (matchers)
+ *  4.验证函数的确切、最少、从未调用次数
+ *  5.为返回值为void的函数通过Stub抛出异常
+ *  6.按照顺序验证执行结果
+ *  7.确保交互(interaction)操作不会执行在mock对象上
+ *  8.查找冗余的调用
+ *  9.简化mock对象的创建
+ *  10.为连续的调用做测试桩 (stub)
+ *  11.为回调做测试桩
+ *  12.doReturn()、doThrow()、doAnswer()、doNothing()、doCallRealMethod()系列方法的运用
  */
 public class MockitoTests {
 
     /**
+     * 1.验证某些行为
      * 一旦mock对象被创建了，mock对象会记住所有的交互。
      * 然后你就可能选择性的验证你感兴趣的交互。
      */
@@ -41,6 +54,7 @@ public class MockitoTests {
     }
 
     /**
+     * 2.如何做一些测试桩 (Stub)
      * 默认情况下，所有的函数都有返回值。mock函数默认返回的是null，
      * 一个空的集合或者一个被对象类型包装的内置类型，例如0、false对应的
      *  对象类型为Integer、Boolean；
@@ -77,6 +91,7 @@ public class MockitoTests {
     }
 
     /**
+     * 3.参数匹配器 (matchers)
      * 如果你使用参数匹配器,所有参数都必须由匹配器提供。
      *  verify(mock).someMethod(anyInt(), anyString(), eq("third argument"));
      *  above is correct - eq() is also an argument matcher
@@ -106,6 +121,9 @@ public class MockitoTests {
         verify(mockedList).get(anyInt());
     }
 
+    /**
+     * 4.验证函数的确切、最少、从未调用次数
+     */
     @Test
     public void testMethodExactNumber(){
         List mockedList = mock(List.class);
@@ -138,6 +156,9 @@ public class MockitoTests {
         verify(mockedList, atMost(5)).add("three times");
     }
 
+    /**
+     * 5.为返回值为void的函数通过Stub抛出异常
+     */
     @Test
     public void testVoidMethodsWithExceptions(){
 
@@ -151,6 +172,7 @@ public class MockitoTests {
     }
 
     /**
+     * 6.按照顺序验证执行结果
      * 验证执行顺序是非常灵活的-你不需要一个一个的验证所有交互,只需要验证你感兴趣的对象即可。
      * 另外，你可以仅通过那些需要验证顺序的mock对象来创建InOrder对象。
      */
@@ -194,6 +216,9 @@ public class MockitoTests {
         // Oh, and A + B can be mixed together at will
     }
 
+    /**
+     * 7.确保交互(interaction)操作不会执行在mock对象上
+     */
     @Test
     public void testVerifyZeroInteractions(){
         List mockOne = mock(List.class);
@@ -218,6 +243,7 @@ public class MockitoTests {
     }
 
     /**
+     * 8.查找冗余的调用
      * 一些用户可能会在频繁地使用verifyNoMoreInteractions()，甚至在每个测试函数中都用。
      * 但是verifyNoMoreInteractions()并不建议在每个测试函数中都使用。
      * verifyNoMoreInteractions()在交互测试套件中只是一个便利的验证，
@@ -242,6 +268,9 @@ public class MockitoTests {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    /**
+     * 9.为连续的调用做测试桩 (stub)
+     */
     @Test
     public void testStubConsecutiveCalls(){
 
@@ -263,8 +292,16 @@ public class MockitoTests {
 
         //Any consecutive call: prints "foo" as well (last stubbing wins).
         System.out.println(mockedList.get(2));
+
+        // 第一次调用时返回"one",第二次返回"two",第三次返回"three"
+        when(mockedList.get(anyInt()))
+                .thenReturn("one", "two", "three");
+
     }
 
+    /**
+     * 10 .为回调做测试桩
+     */
     @Test
     public void testStubWithCallbacks(){
         List mockedList = mock(List.class);
@@ -278,5 +315,19 @@ public class MockitoTests {
 
         //the following prints "called with arguments: foo"
         System.out.println(mockedList.add("foo"));
+    }
+
+    @Test
+    public void testDoReturn(){
+        List mockedList = mock(List.class);
+        doReturn(10).when(mockedList).size();
+        mockedList.size();
+    }
+
+    @Test
+    public void testDoThrow(){
+        List mockedList = mock(List.class);
+        doThrow(RuntimeException.class).when(mockedList).get(anyInt());
+        mockedList.get(1);
     }
 }
