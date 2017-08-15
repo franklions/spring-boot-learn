@@ -1,7 +1,6 @@
-package java.async.completable.future.demo;
+package async.completable.future.demo;
 
-import java.async.completable.future.demo.service.Test1;
-import java.io.IOException;
+import async.completable.future.demo.service.Test2;
 
 /**
  * @author Administrator
@@ -12,7 +11,7 @@ import java.io.IOException;
  */
 public class AsyncDemoApplication {
     public static void main(String[] args) throws Exception {
-        Test1.test();
+        Test2.test();
         System.in.read();
     }
 }

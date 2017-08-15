@@ -1,8 +1,5 @@
-package java.async.completable.future.demo.service;
+package async.completable.future.demo.service;
 
-import com.sun.corba.se.impl.orbutil.closure.Future;
-
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 /**

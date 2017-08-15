@@ -1,6 +1,5 @@
-package java.async.completable.future.demo.service;
+package async.completable.future.demo.service;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.function.*;
 
 /**
