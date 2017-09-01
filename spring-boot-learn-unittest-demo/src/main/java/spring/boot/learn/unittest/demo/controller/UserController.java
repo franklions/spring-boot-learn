@@ -36,23 +36,28 @@ public class UserController {
     }
 
     @RequestMapping(value="/users",method = RequestMethod.POST)
-    public String postUser(@ModelAttribute User user){
+    public String postUser(@RequestBody User user){
         boolean retval =userService.createUser(user);
         return retval?"success<"+user.getId()+">":"fail";
     }
 
-    @RequestMapping(value="/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/users/{id}",method = RequestMethod.GET)
     public User getUser(@PathVariable Long id){
         return userService.getUserById(id);
     }
 
-    @RequestMapping(value="/{id}",method = RequestMethod.PUT)
-    public String putUser(@PathVariable Long id,@ModelAttribute User user){
+    @RequestMapping(value = "/users/search/{name}",method = RequestMethod.GET)
+    public User getUserByName(@PathVariable String name){
+        return userService.getUserByName(name);
+    }
+
+    @RequestMapping(value="/users/{id}",method = RequestMethod.PUT)
+    public String putUser(@PathVariable Long id,@RequestBody User user){
         boolean retval = userService.updateUser(id,user);
         return retval?"success":"fail";
     }
 
-    @RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value="/users/{id}",method = RequestMethod.DELETE)
     public String deleteUser(@PathVariable Long id)
     {
         boolean retval = userService.deleteUser(id);

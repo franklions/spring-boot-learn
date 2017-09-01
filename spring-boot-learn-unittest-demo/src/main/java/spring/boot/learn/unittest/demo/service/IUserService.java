@@ -22,4 +22,5 @@ public interface IUserService {
 
     Boolean deleteUser(Long id);
 
+    User getUserByName(String name);
 }

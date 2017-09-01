@@ -53,4 +53,20 @@ public class UserServiceImpl implements IUserService {
     public Boolean deleteUser(Long id) {
         return this.userMapper.deleteByPrimaryKey(id) >0;
     }
+
+    @Override
+    public User getUserByName(String name) {
+        User retVal = null;
+        List<User> allUsers  = this.getAllUser();
+        if (allUsers == null || allUsers.size() < 1)
+            return null;
+
+        for (User user:allUsers) {
+            if(user.getName().equals(name)){
+                retVal = user;
+                break;
+            }
+        }
+        return retVal;
+    }
 }

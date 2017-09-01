@@ -19,11 +19,7 @@ public interface UserMapper {
 
       int insert(@Param("record") User record);
 
-      int insertSelective(@Param("record") User record);
-
       User selectByPrimaryKey(@Param("id") Long id);
-
-      int updateByPrimaryKeySelective(@Param("record") User record);
 
       int updateByPrimaryKey(@Param("record") User record);
 
