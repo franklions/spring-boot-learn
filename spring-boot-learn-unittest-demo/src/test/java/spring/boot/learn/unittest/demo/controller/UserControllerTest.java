@@ -18,7 +18,6 @@ import spring.boot.learn.unittest.demo.service.IUserService;
 import javax.sql.DataSource;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
