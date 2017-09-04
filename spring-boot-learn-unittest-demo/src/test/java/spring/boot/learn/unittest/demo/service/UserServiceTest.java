@@ -48,21 +48,17 @@ public class UserServiceTest {
         when(this.userMapper.insert(anyObject())).thenReturn(1);
         Boolean result =  this.userService.createUser(user);
         assertTrue(result);
+        verify(this.userMapper,times(1)).insert(anyObject());
     }
 
     @Test
     public void getAllUser() throws Exception {
 
-        List<User> allUsers = new ArrayList<>();
-        allUsers.add(user);
-        allUsers.add(user);
-        allUsers.add(user);
-        allUsers.add(user);
-
+        List<User> allUsers = new ArrayList<User>(){{add(user);add(user);add(user);add(user);add(user);}};
         when(this.userMapper.selectAllUser()).thenReturn(allUsers);
         List<User> result = this.userService.getAllUser();
         assertEquals(result, allUsers);
-
+        verify(this.userMapper,times(1)).selectAllUser();
     }
 
     @Test
@@ -70,6 +66,7 @@ public class UserServiceTest {
         when(this.userMapper.selectByPrimaryKey(anyLong())).thenReturn(user);
         User result = this.userService.getUserById(1L);
         assertEquals(result,user);
+        verify(this.userMapper,times(1)).selectByPrimaryKey(anyLong());
     }
 
     @Test
@@ -79,6 +76,7 @@ public class UserServiceTest {
         Boolean result = this.userService.updateUser(1L,user);
 
         assertTrue(result);
+        verify(this.userMapper,times(1)).updateByPrimaryKey(anyObject());
     }
 
     @Test
@@ -88,21 +86,20 @@ public class UserServiceTest {
         Boolean result = this.userService.deleteUser(1L);
 
         assertTrue(result);
+        verify(this.userMapper,times(1)).deleteByPrimaryKey(anyLong());
     }
 
     @Test
     public void getUserByName() throws Exception {
-        List<User> allUsers = new ArrayList<>();
-        allUsers.add(user);
-        allUsers.add(user);
-        allUsers.add(user);
-        allUsers.add(user);
+        List<User> allUsers = new ArrayList<User>(){{add(user);add(user);add(user);add(user);add(user);}};
 
         when(this.userMapper.selectAllUser()).thenReturn(allUsers);
 
         User result = this.userService.getUserByName("tom");
         System.out.printf("user:"+result);
         assertNotNull(result);
+
+        verify(this.userMapper,times(1)).selectAllUser();
     }
 
 
