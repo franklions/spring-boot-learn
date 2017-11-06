@@ -44,6 +44,7 @@ public class LogHttpRequestFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
             String requestUrl = httpRequest.getRequestURL().toString();
             Map paramMap = httpRequest.getParameterMap();
+            httpRequest.getScheme();
 
             Map headMap = new HashMap();
             Enumeration<String> em = httpRequest.getHeaderNames();

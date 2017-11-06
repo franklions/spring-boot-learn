@@ -5,6 +5,7 @@ import com.aliyun.openservices.log.common.*;
 import com.aliyun.openservices.log.exception.LogException;
 import com.aliyun.openservices.log.request.*;
 import com.aliyun.openservices.log.response.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,24 +21,17 @@ import java.util.List;
 @Component
 public class AliyunClientService {
 
-    static final String endpoint = "cn-beijing.log.aliyuncs.com"; // 选择与上面步骤创建 project 所属区域匹配的
-    // Endpoint
-    static final String accessKeyId = "LTAI7oxRGBQuiRu8"; // 使用您的阿里云访问密钥 AccessKeyId
-    static final String accessKeySecret = "ekiP6UQZYFqFrTf8DehPdlwjMebUpn"; // 使用您的阿里云访问密钥
+   private Client aliyunClient;
 
-    private static  Client innerClient = null;
-
-    static{
-        innerClient = new Client(endpoint,accessKeyId,accessKeySecret);
-    }
-
-    public AliyunClientService() {
+    @Autowired
+    public AliyunClientService(Client aliyunClient) {
+        this.aliyunClient = aliyunClient;
     }
 
     public void getLogstore(String project, String logStoreName){
         GetLogStoreRequest request = new GetLogStoreRequest(project,logStoreName);
         try {
-            GetLogStoreResponse response = innerClient.GetLogStore(request);
+            GetLogStoreResponse response = aliyunClient.GetLogStore(request);
             LogStore logStore = response.GetLogStore();
             if(logStore != null ){
                 System.out.println(logStore.ToJsonString());
@@ -51,7 +45,7 @@ public class AliyunClientService {
         ListLogStoresRequest request = new ListLogStoresRequest(project,offset,size,logStoreName);
         ArrayList<String> logStoreNames = null;
         try {
-            ListLogStoresResponse response =  innerClient.ListLogStores(request);
+            ListLogStoresResponse response =  aliyunClient.ListLogStores(request);
             logStoreNames = response.GetLogStores();
             System.out.println( "ListLogs:" + logStoreNames.toString() + "\n");
             System.out.println("ListLogsTotal:"+response.GetCount());
@@ -64,7 +58,7 @@ public class AliyunClientService {
     public void getListShards(String project,String logStoreName){
         ListShardRequest request = new ListShardRequest(project,logStoreName);
         try {
-            ListShardResponse response = innerClient.ListShard(request);
+            ListShardResponse response = aliyunClient.ListShard(request);
             ArrayList<Shard> shards = response.GetShards();
             System.out.println("shards:"+ shards.toString());
         } catch (LogException e) {
@@ -81,7 +75,7 @@ public class AliyunClientService {
        }
 
         try {
-            GetCursorResponse response =  innerClient.GetCursor(request);
+            GetCursorResponse response =  aliyunClient.GetCursor(request);
             String cursor= response.GetCursor();
             System.out.println("cursor:"+cursor);
         } catch (LogException e) {
@@ -96,7 +90,7 @@ public class AliyunClientService {
                 ,logStoreName,shardId,count,cursor,endCursor);
 
         try {
-            BatchGetLogResponse response = innerClient.BatchGetLog(request);
+            BatchGetLogResponse response = aliyunClient.BatchGetLog(request);
             System.out.println("count:"+response.GetCount() + ",size:"+response.GetRawSize());
             List<LogGroupData> logGroups = response.GetLogGroups();
             for(LogGroupData logGroupData:logGroups){
@@ -123,7 +117,7 @@ public class AliyunClientService {
                          String topic,String query){
         GetLogsRequest request = new GetLogsRequest(project,logStoreName,from,to,topic,query);
         try {
-            GetLogsResponse response = innerClient.GetLogs(request);
+            GetLogsResponse response = aliyunClient.GetLogs(request);
             if(response != null && response.IsCompleted()){
                 if(response.GetCount() >0){
                     for(QueriedLog queriedLog:response.GetLogs()){
@@ -146,7 +140,7 @@ public class AliyunClientService {
         GetHistogramsRequest request = new GetHistogramsRequest(project
                 ,logStoreName,topic,query,from,to);
         try {
-            GetHistogramsResponse response = innerClient.GetHistograms(request);
+            GetHistogramsResponse response = aliyunClient.GetHistograms(request);
             if(response != null && response.IsCompleted()){
                 if(response.GetTotalCount() >0){
                     for(Histogram histogram:response.GetHistograms()){

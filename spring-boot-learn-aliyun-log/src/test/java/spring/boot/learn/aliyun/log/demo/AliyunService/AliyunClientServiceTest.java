@@ -3,6 +3,8 @@ package spring.boot.learn.aliyun.log.demo.AliyunService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
@@ -15,14 +17,11 @@ import static org.junit.Assert.*;
  * @since Jdk 1.8
  */
 @RunWith(SpringRunner.class)
+@SpringBootTest
 public class AliyunClientServiceTest {
 
+    @Autowired
     AliyunClientService service ;
-
-    @Before
-    public void init(){
-        service = new AliyunClientService();
-    }
 
     @Test
     public void getLogstore() throws Exception {
