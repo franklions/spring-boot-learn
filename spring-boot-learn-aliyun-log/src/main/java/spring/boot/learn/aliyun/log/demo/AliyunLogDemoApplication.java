@@ -33,6 +33,7 @@ public class AliyunLogDemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings)  {
+
         System.out.println(">>>>>>>>>>>启动clientWorker>>>>>>>>>>>");
         executor.execute(clientWorker);
 

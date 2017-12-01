@@ -31,7 +31,7 @@ public class LogHubProperties {
     //用于指出在服务端没有记录Shard的 checkpoint 的情况下应该从什么位置消费Shard，如果服务端保存了有效的 checkpoint 信息，那么这些取值不起任何作用， mCursorPosition 取值可以是 [BEGIN_CURSOR, END_CURSOR, SPECIAL_TIMER_CURSOR]中的一个，BEGIN_CURSOR 表示从Shard中的第一条数据开始消费，END_CURSOR 表示从Shard中的当前时刻的最后一条数据开始消费，SPECIAL_TIMER_CURSOR 和下面的 mLoghubCursorStartTime 配对使用，表示从特定的时刻开始消费数据。
     private LogHubCursorPosition mCursorPosition;
     //当 mCursorPosition 取值为 SPECIAL_TIMER_CURSOR 时，指定消费时间，单位是秒。
-    private int  mLoghubCursorStartTime = 0;
+    private int  mLoghubCursorStartTime ;
     // 轮询获取 LogHub 数据的时间间隔，间隔越小，抓取越快，单位是毫秒，默认是 DEFAULT_DATA_FETCH_INTERVAL_MS，建议时间间隔 200ms 以上。
     private long mDataFetchIntervalMillis;
     // worker 向服务端汇报心跳的时间间隔，单位是毫秒，建议取值 10000ms。

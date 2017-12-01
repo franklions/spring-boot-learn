@@ -1,4 +1,4 @@
-package java.security.learn.demo.RSA;
+package myjava.security.learn.demo.RSA;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 

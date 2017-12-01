@@ -1,4 +1,4 @@
-package java.security.learn.demo.AES;
+package myjava.security.learn.demo.AES;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

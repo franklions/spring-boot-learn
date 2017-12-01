@@ -16,6 +16,6 @@ public class IotAppLogHubProcessorFactory implements ILogHubProcessorFactory {
 
     @Override
     public ILogHubProcessor generatorProcessor() {
-        return null;
+        return  new IotAppLogHubProecessor();
     }
 }

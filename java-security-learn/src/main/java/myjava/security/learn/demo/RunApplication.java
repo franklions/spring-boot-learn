@@ -1,4 +1,4 @@
-package java.security.learn.demo;
+package myjava.security.learn.demo;
 
 /**
  * @author flsh

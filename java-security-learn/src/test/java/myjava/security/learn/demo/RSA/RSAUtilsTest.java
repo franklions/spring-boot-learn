@@ -1,4 +1,4 @@
-package java.security.learn.demo.RSA;
+package myjava.security.learn.demo.RSA;
 
 import static org.junit.Assert.*;
 
