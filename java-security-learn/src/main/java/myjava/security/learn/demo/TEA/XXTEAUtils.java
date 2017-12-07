@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
  * @author flsh
  * @version 1.0
  * @description
+ * 加密时取key的前16位，不够16位的用零补齐
  * @date 2017/12/1
  * @since Jdk 1.8
  */

@@ -1,9 +1,9 @@
 package myjava.security.learn.demo.AES;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
 import java.security.SecureRandom;
 
 /**
@@ -53,14 +53,23 @@ public class AESUtils {
 
     public static byte[] AES_ECB_Encrypt(byte[] content, byte[] keyBytes){
         try{
-            KeyGenerator keyGenerator=KeyGenerator.getInstance(KEY_ALGORITHM);
-            keyGenerator.init(DEFAULT_KEY_SIZE, new SecureRandom(keyBytes));
-            SecretKey key=keyGenerator.generateKey();
+//            KeyGenerator keyGenerator=KeyGenerator.getInstance(KEY_ALGORITHM);
+//            keyGenerator.init(DEFAULT_KEY_SIZE, new SecureRandom(keyBytes));
+//            SecretKey key=keyGenerator.generateKey();
+            SecretKey key = new SecretKeySpec(keyBytes,KEY_ALGORITHM);
+            byte[]  keys =  key.getEncoded();
+            System.out.println(new String(keys));
             Cipher cipher=Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] result=cipher.doFinal(content);
             return result;
-        }catch (Exception e) {
+        }catch (InvalidKeyException ex){
+            System.out.println(ex.getMessage());
+        }catch (IllegalBlockSizeException ex){
+            System.out.println(ex.getMessage());
+        }catch(BadPaddingException ex){
+            System.out.println(ex.getMessage());
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             System.out.println("exception:"+e.toString());
         }
@@ -69,13 +78,20 @@ public class AESUtils {
 
     public static byte[] AES_ECB_Decrypt(byte[] content, byte[] keyBytes){
         try{
-            KeyGenerator keyGenerator=KeyGenerator.getInstance(KEY_ALGORITHM);
-            keyGenerator.init(DEFAULT_KEY_SIZE, new SecureRandom(keyBytes));//key长可设为128，192，256位，这里只能设为128
-            SecretKey key=keyGenerator.generateKey();
+//            KeyGenerator keyGenerator=KeyGenerator.getInstance(KEY_ALGORITHM);
+//            keyGenerator.init(DEFAULT_KEY_SIZE, new SecureRandom(keyBytes));//key长可设为128，192，256位，这里只能设为128
+//            SecretKey key=keyGenerator.generateKey();
+            SecretKey key = new SecretKeySpec(keyBytes,KEY_ALGORITHM);
             Cipher cipher=Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, key);
             byte[] result=cipher.doFinal(content);
             return result;
+        }catch (InvalidKeyException ex){
+            System.out.println(ex.getMessage());
+        }catch (IllegalBlockSizeException ex){
+            System.out.println(ex.getMessage());
+        }catch(BadPaddingException ex){
+            System.out.println(ex.getMessage());
         }catch (Exception e) {
             // TODO Auto-generated catch block
             System.out.println("exception:"+e.toString());
@@ -85,9 +101,10 @@ public class AESUtils {
 
     public static byte[] AES_CBC_Encrypt(byte[] content, byte[] keyBytes, byte[] iv){
         try{
-            KeyGenerator keyGenerator=KeyGenerator.getInstance(KEY_ALGORITHM);
-            keyGenerator.init(DEFAULT_KEY_SIZE, new SecureRandom(keyBytes));
-            SecretKey key=keyGenerator.generateKey();
+//            KeyGenerator keyGenerator=KeyGenerator.getInstance(KEY_ALGORITHM);
+//            keyGenerator.init(DEFAULT_KEY_SIZE, new SecureRandom(keyBytes));
+//            SecretKey key=keyGenerator.generateKey();
+            SecretKey key = new SecretKeySpec(keyBytes,KEY_ALGORITHM);
             Cipher cipher=Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(iv));
             byte[] result=cipher.doFinal(content);
@@ -101,9 +118,10 @@ public class AESUtils {
 
     public static byte[] AES_CBC_Decrypt(byte[] content, byte[] keyBytes, byte[] iv){
         try{
-            KeyGenerator keyGenerator=KeyGenerator.getInstance(KEY_ALGORITHM);
-            keyGenerator.init(DEFAULT_KEY_SIZE, new SecureRandom(keyBytes));//key长可设为128，192，256位，这里只能设为128
-            SecretKey key=keyGenerator.generateKey();
+//            KeyGenerator keyGenerator=KeyGenerator.getInstance(KEY_ALGORITHM);
+//            keyGenerator.init(DEFAULT_KEY_SIZE, new SecureRandom(keyBytes));//key长可设为128，192，256位，这里只能设为128
+//            SecretKey key=keyGenerator.generateKey();
+            SecretKey key = new SecretKeySpec(keyBytes,KEY_ALGORITHM);
             Cipher cipher=Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
             byte[] result=cipher.doFinal(content);

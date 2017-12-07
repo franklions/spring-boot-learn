@@ -16,7 +16,8 @@ public class XXTEAUtilsTest {
     @Test
     public void encryptToBase64String() throws Exception {
         String str = "Hello World! 你好，中国！";
-        String key = "1234567890";
+        String key = "1234567890123456";
+        byte[] datas = XXTEAUtils.encrypt(str,key);
         String encrypt_data = XXTEAUtils.encryptToBase64String(str, key);
         System.out.println(encrypt_data);
         assert("QncB1C0rHQoZ1eRiPM4dsZtRi9pNrp7sqvX76cFXvrrIHXL6".equals(encrypt_data));

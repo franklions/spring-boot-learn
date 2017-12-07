@@ -119,6 +119,20 @@ public class RSAUtils {
         return Base64Utils.encode(signature.sign());
     }
 
+    public static String signToHex(byte[] data, String privateKey,String signatureKey) throws Exception {
+        if(!SIGNATURE_ALGORITHM.containsKey(signatureKey.toUpperCase())){
+            throw new IllegalArgumentException("'"+signatureKey+"' signature  is not exits.");
+        }
+        byte[] keyBytes = Base64Utils.decode(privateKey);
+        PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+        PrivateKey privateK = keyFactory.generatePrivate(pkcs8KeySpec);
+        Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM.get(signatureKey.toUpperCase()));
+        signature.initSign(privateK);
+        signature.update(data);
+        return Base64Utils.hexEncode(signature.sign());
+    }
+
     /** */
     /**
      * <p>
