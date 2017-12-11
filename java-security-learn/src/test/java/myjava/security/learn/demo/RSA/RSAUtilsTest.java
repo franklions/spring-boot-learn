@@ -1,5 +1,7 @@
 package myjava.security.learn.demo.RSA;
 
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 /**
@@ -12,6 +14,10 @@ import static org.junit.Assert.*;
 public class RSAUtilsTest {
     @org.junit.Test
     public void genKeyPair() throws Exception {
+        Map keyMap =  RSAUtils.genKeyPair();
+        System.out.println("-----BEGIN RSA PRIVATE KEY-----");
+        System.out.println(RSAUtils.getPrivateKey(keyMap));
+        System.out.println("-----END RSA PRIVATE KEY-----");
     }
 
     @org.junit.Test
