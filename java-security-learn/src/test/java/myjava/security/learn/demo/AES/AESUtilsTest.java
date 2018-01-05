@@ -19,8 +19,8 @@ import static org.junit.Assert.*;
 public class AESUtilsTest {
     @Test
     public void AES_ECB_Encrypt() throws Exception {
-        String content = "hello word 中国!";
-        String key="1234567890123456";
+        String content = "a74cf1c8a9574edd898ed3d4d3ae0078";
+        String key="a1ad3dc64e4942b8";
         try {
             byte[] cipherByte = AESUtils.AES_ECB_Encrypt(content.getBytes("utf-8"),
                     key.getBytes("utf-8"));

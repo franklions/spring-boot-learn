@@ -24,23 +24,23 @@ public class RSAUtilsTest {
     public void sign() throws Exception {
         String content = "8f8c733bf4ab4a039d85d7d1d470759b";
         String privateKey =
-                "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ44b4F3I+oB5tvecLo/Z6D6y+k5" +
-                "B4YKFEqUoug76gQqp4HiKSjIP+zNV68dMYi9hGN46DsZ3FfwaPEUH8LtggkXIByiJHO6Z5i0hw4D" +
-                "S8roihpxnrsOMyi2ZcrtLOjbB/sR9havAjap1gcrdwvGqjIww6HZmNyVhs4dgZtNU6xJAgMBAAEC" +
-                "gYAu4RXYzE4t1aZrWvsXlBXGUsj8L1OVWYMtneCu4qGx3lmHWFVNqheWuDjUv9efZlfFiVt1t3Hb" +
-                "9HWDiKzoeqreQyzKRqrly18qQ+9ZIApNF4e2at/m6qzqLZzbmcCbgmH3YWRYitmJiCQiVcdhftJp" +
-                "wTP2nRaEcSIUZ/CXib1IaQJBANWN5bdgIxXIhnI0mAzg3sbWM58MH3fmu8dSwCLBMRYs827Tqx/+" +
-                "QCybobpgPRpBzp3vP7e36uLqCkVwuYU02FMCQQC9qwiLTUK3stoAzfOBWr6LekoxcB9B+ml5Cm4v" +
-                "9V1lLPTESCBRKCI8mzXt1iNPTltaHgeSvfzADYSCcC4jE6VzAkAed54caWTYCMHVrVc8DyD5cTnw" +
-                "KQScUJjduRqcWr+sEEGywBQb/mQdeR67vls5UcYuliGbDmw+b3GDsq9lJ8LtAkEAhSWnFtuDBaBZ" +
-                "qAzsb5d7gkC0CuayGsgm+ODYn3Q5P0iC/7O+dBqfhjpTboZQPWE9ghLosBwNbelPZ55G1Tr6fwJB" +
-                "AK2MnHbgWadpDaDUZfV/kAyhwJB9eWeKseY6rlfBtklnWoQjINT/Jn8lzhTSZJ/JmaRCelZCzb3f" +
-                "717Bsug+1WU=";
-        String mi= RSAUtils.signToHex(content.getBytes(),privateKey,"MD5");
+                "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJ9oWHUogZ8ue6/Z\n" +
+                        "1UuSgXAjtWI6PkXWpvmXSxuHtqrZ4Bk++yPJzHeEKs0QHYO9ZpXouanKT5ecxumT\n" +
+                        "wQ2Ok/su0ijAJXLq+T7qzaGN4YjbPAAoCR04iy9q2G0NEmovEtwD9zzBx82rbQz1\n" +
+                        "615h5K/MPo/ZZJ67WPyKvJBOxQxZAgMBAAECgYEAh+JxFV30MPd05FByrDs1L5yg\n" +
+                        "8BzqHKqAJ986XTtxEW8swxiXCMjrDS6TNb75CeYYXs3GBuC4vGsefNpBBQd3SJyv\n" +
+                        "4+JTvt5Tg8jY5mHEzoTnUjCPSbA0aaiLmo2xDtw9fpJ0UihSj6QG1kRXEBPk1Acz\n" +
+                        "XEDFozgxvOOtp0fBK8kCQQDUAaEYAP1fNKFpaA4bv6NxQzKB7jfqqMeBqfb66mMW\n" +
+                        "0cEZEjq5kVFfXo8hUkY+yHv0WTJjvAS6df1bAPhAxwfvAkEAwHyF2bBfW5GTd+Yf\n" +
+                        "8rfUq9SuDJjmt8rOpMwXLDthl1A0endNeUHXQ5q/glQsVPsU0gYtcdZe3SYYr4F5\n" +
+                        "xIsoNwJAJbCgdgb/BGTz6SxRjcdVBDbBDO5PzIzy4u9XdCYlNZJWtOFTxVe7UqwZ\n" +
+                        "3/+jc1frCXauCaMMaCW/w+T5PXLkywJARTWAuwDbiIUTTO0FV7QZV58k5Yqkijj1\n" +
+                        "i/OF8XV4ZXuFIvN6e7rct4YQjb/OINAWcF2gQWoeuc1U2uXm7nBKiQJAR44RxrrC\n" +
+                        "7Uw4WYNHvjCacaW/BeZjoO2ZMBW38nZBKTqNs3YLzuxVLdL3Dph+Z5x0qlbUMw6C\n" +
+                        "2SKlPisT60BVhA==";
+        String mi= RSAUtils.signToHex(content.getBytes(),privateKey.replace("\n",""),"MD5");
         System.out.println(mi);
-        String mi2Hex="29db568349491ed4854ef45277c62f634016b4f2fc7be2be717048378e87e0e303f8e3dfa3" +
-                "76c2b37295a6a8dbd33bf28c53c32d6284fd0a32b6d6131671c30806b905c691f2c60892cd9b2f7967" +
-                "cb885481ff4e724e8cf19da9324836e08913c12d2537110f2b6e44245102a0d62f4e9a1345a380d7b6b397b7d07b111c7f2a";
+        String mi2Hex="9dfd7e90965470bca77dad2ac4f7b86835f2e710497c8af15d7edba96b9351ba63364192ed650b40a017e43f3c4636f1318de92f4a2b3bd7b0f1d4e561fa2f67709f51e50ad00c3942a76d44fdb05ac47407bf747d6df2dfdba4a0b713d6509ce6c4d47480812e9e7338c2dade9b98ea405d1ae14bf7fad233d2fd460f412f32";
         assertEquals(mi,mi2Hex);
     }
 

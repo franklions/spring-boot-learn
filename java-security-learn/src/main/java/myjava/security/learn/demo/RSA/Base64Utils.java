@@ -1,7 +1,7 @@
 package myjava.security.learn.demo.RSA;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
+import java.util.*;
 import java.io.*;
 
 
@@ -26,6 +26,9 @@ public class Base64Utils {
      */
     private static final int CACHE_SIZE = 1024;
 
+    private static final Base64.Decoder decoder = Base64.getDecoder();
+    private static final Base64.Encoder encoder = Base64.getEncoder();
+
     /** *//**
      * <p>
      * BASE64字符串解码为二进制数据
@@ -36,7 +39,7 @@ public class Base64Utils {
      * @throws Exception
      */
     public static byte[] decode(String base64) throws Exception {
-        return Base64.decode(base64);
+        return decoder.decode(base64);
     }
 
     /** *//**
@@ -49,7 +52,7 @@ public class Base64Utils {
      * @throws Exception
      */
     public static String encode(byte[] bytes) throws Exception {
-        return new String(Base64.encode(bytes));
+        return new String(encoder.encode(bytes));
     }
 
     /**
