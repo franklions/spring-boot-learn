@@ -24,6 +24,8 @@
         <module>spring-boot-learn-aliyun-log</module>
         <module>java-security-learn</module>
         <module>spring-boot-learn-rpc</module>
+        <module>spring-boot-learn-grpc</module>
+        <module>spring-boot-learn-protobuf</module>
     </modules>
 
     <parent>

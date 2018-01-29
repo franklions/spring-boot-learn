@@ -357,4 +357,20 @@ public class RSAUtils {
     }
 
 
+    public static String showPrivate( String privateKey){
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("-----BEGIN RSA PRIVATE KEY-----");
+        stringBuffer.append("\n");
+        privateKey =privateKey.replace("\r","").replace("\n","");
+        for(int index=0;index <privateKey.length();index +=64){
+            if(index+64 <= privateKey.length()) {
+                stringBuffer.append(privateKey.substring(index, index + 64));
+            }else{
+                stringBuffer.append(privateKey.substring(index,privateKey.length()));
+            }
+            stringBuffer.append("\n");
+        }
+        stringBuffer.append("-----END RSA PRIVATE KEY-----");
+        return stringBuffer.toString();
+    }
 }
