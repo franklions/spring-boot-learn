@@ -1,7 +1,6 @@
 package spring.boot.learn.grpc.demo.helloworld;
 
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NegotiationType;
 import io.grpc.netty.NettyChannelBuilder;
@@ -10,7 +9,6 @@ import spring.boot.learn.grpc.demo.protocol.GreeterGrpc;
 import spring.boot.learn.grpc.demo.protocol.HelloReply;
 import spring.boot.learn.grpc.demo.protocol.HelloRequest;
 
-import javax.net.ssl.SSLException;
 import java.io.*;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -38,7 +36,7 @@ public class HelloWorldClient {
                 loadX509Cert("ca.pem")
         };
         channel = NettyChannelBuilder.forAddress(host, port)
-                .overrideAuthority("foo.test.google.fr")
+//                .overrideAuthority("foo.test.google.fr")
                 .negotiationType(NegotiationType.TLS)
                 .sslContext(GrpcSslContexts
                         .forClient()
@@ -63,7 +61,7 @@ public class HelloWorldClient {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException, CertificateException {
-        HelloWorldClient client = new HelloWorldClient("localhost", 50051);
+        HelloWorldClient client = new HelloWorldClient("foo.test.google.fr", 50051);
         client.greet(Thread.currentThread().getName() +"_world:\t" + UUID.randomUUID().toString());
 
 //        for(int i=0;i<100;i++) {
@@ -79,7 +77,6 @@ public class HelloWorldClient {
 //            thread.start();
 //        }
         Thread.sleep(5000);
-        System.in.read();
         client.shutdown();
     }
 

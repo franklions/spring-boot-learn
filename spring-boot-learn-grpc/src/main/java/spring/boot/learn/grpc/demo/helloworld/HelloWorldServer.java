@@ -2,7 +2,6 @@ package spring.boot.learn.grpc.demo.helloworld;
 
 
 import io.grpc.Server;
-import io.grpc.ServerBuilder;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyServerBuilder;
 import io.grpc.stub.StreamObserver;
