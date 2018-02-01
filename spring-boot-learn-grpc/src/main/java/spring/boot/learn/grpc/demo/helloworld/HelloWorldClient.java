@@ -45,6 +45,7 @@ public class HelloWorldClient {
         channel = NettyChannelBuilder.forAddress(host, port)
 //                .overrideAuthority("foo.test.google.fr")
                 .negotiationType(NegotiationType.TLS)
+                .executor(Executors.newFixedThreadPool(1))
                 .sslContext(GrpcSslContexts
                         .forClient()
                         .keyManager(loadCert("client.pem"), loadCert("client.key"))
