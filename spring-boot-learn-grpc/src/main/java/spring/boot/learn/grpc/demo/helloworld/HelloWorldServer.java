@@ -15,6 +15,7 @@ import java.io.*;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.Executors;
 
 /**
  * @author flsh
@@ -34,6 +35,7 @@ public class HelloWorldServer {
                 loadX509Cert("ca.pem")
         };
         server = NettyServerBuilder.forPort(port)
+                .executor(Executors.newFixedThreadPool(16))
                 .maxMessageSize(MAX_MESSAGE_SIZE)
                 .sslContext(GrpcSslContexts
                         .forServer(loadCert("server1.pem"),loadCert("server1.key"))
