@@ -1,10 +1,12 @@
 package spring.boot.learn.rabbitmq.demo.config;
 
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,11 +31,10 @@ public class RabbitmqConfig {
     @Autowired
     RabbitmqProperties properties;
 
-
     @Bean(name="firstConnectionFactory")
-    @Primary
     public ConnectionFactory firstConnectionFactory(
             @Value("${spring.rabbitmq.first.addresses}") String addresses,
+            @Value("${spring.rabbitmq.first.vhost}") String vhost,
 //            @Value("${spring.rabbitmq.first.port}") int port,
             @Value("${spring.rabbitmq.first.username}") String username,
             @Value("${spring.rabbitmq.first.password}") String password
@@ -44,27 +45,31 @@ public class RabbitmqConfig {
         connectionFactory.setAddresses(addresses);
         connectionFactory.setUsername(username);
         connectionFactory.setPassword(password);
+        connectionFactory.setVirtualHost(vhost);
         return connectionFactory;
     }
 
+    @Primary
     @Bean(name="secondConnectionFactory")
     public ConnectionFactory secondConnectionFactory(
-            @Value("${spring.rabbitmq.second.host}") String host,
-            @Value("${spring.rabbitmq.second.port}") int port,
+//            @Value("${spring.rabbitmq.second.host}") String host,
+//            @Value("${spring.rabbitmq.second.port}") int port,
+            @Value("${spring.rabbitmq.second.addresses}") String addresses,
+            @Value("${spring.rabbitmq.second.vhost}") String vhost,
             @Value("${spring.rabbitmq.second.username}") String username,
             @Value("${spring.rabbitmq.second.password}") String password
     ){
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setHost(host);
-        connectionFactory.setPort(port);
+//        connectionFactory.setHost(host);
+//        connectionFactory.setPort(port);
+        connectionFactory.setAddresses(addresses);
         connectionFactory.setUsername(username);
         connectionFactory.setPassword(password);
-        connectionFactory.setVirtualHost("test");
+        connectionFactory.setVirtualHost(vhost);
         return connectionFactory;
     }
 
     @Bean(name="firstRabbitTemplate")
-    @Primary
     public RabbitTemplate firstRabbitTemplate(
             @Qualifier("firstConnectionFactory") ConnectionFactory connectionFactory
     ){
@@ -100,15 +105,34 @@ public class RabbitmqConfig {
         return factory;
     }
 
-    @Bean
-    public Queue firstQueue() {
+    @Bean("firstQueue")
+    public Queue firstQueue( ) {
         System.out.println("configuration firstQueue ........................");
-        return new Queue("hello1");
+        Queue first =  new Queue("hello1");
+        return  first;
     }
 
-    @Bean
-    public Object secondQueue() {
+    @Bean("secondQueue")
+    public Queue secondQueue() {
         System.out.println("configuration secondQueue ........................");
-        return new Queue("hello2");
+        Queue second =  new Queue("hello2");
+        return second;
     }
+
+    @Bean(name = "bAmqpAdmin")
+    public AmqpAdmin rpdAmqpAdmin(@Qualifier("secondConnectionFactory") ConnectionFactory secondConnectionFactory) {
+        RabbitAdmin admin = new RabbitAdmin(secondConnectionFactory);
+        admin.setAutoStartup(false);
+        admin.declareQueue(secondQueue());
+        return admin;
+    }
+
+    @Bean(name = "aAmqpAdmin")
+    public AmqpAdmin aAmqpAdmin(@Qualifier("firstConnectionFactory") ConnectionFactory firstConnectionFactory) {
+        RabbitAdmin admin = new RabbitAdmin(firstConnectionFactory);
+        admin.setAutoStartup(false);
+        admin.declareQueue(firstQueue());
+        return admin;
+    }
+
 }

@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
  * @since Jdk 1.8
  */
 @Component
-@RabbitListener(queues = "hello2", containerFactory="secondFactory" )
+//@RabbitListener(queues = "hello2", containerFactory="secondFactory" )
 public class Receiver2 {
-    @RabbitHandler
+//    @RabbitHandler
     public void process(String hello) {
         System.out.println("Receiver : " + hello);
     }
