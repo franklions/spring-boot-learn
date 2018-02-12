@@ -2,6 +2,7 @@ package spring.boot.learn.grpc.demo.helloworld;
 
 
 import io.grpc.Server;
+import io.grpc.ServerBuilder;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -12,6 +13,7 @@ import spring.boot.learn.grpc.demo.protocol.HelloReply;
 import spring.boot.learn.grpc.demo.protocol.HelloRequest;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
@@ -31,21 +33,27 @@ public class HelloWorldServer {
     public static final int MAX_MESSAGE_SIZE = 16 * 1024 * 1024;
 
     private void start() throws IOException, CertificateException {
-        X509Certificate[] serverTrustedCaCerts = {
-                loadX509Cert("ca.pem")
-        };
-        server = NettyServerBuilder.forPort(port)
-                .executor(Executors.newFixedThreadPool(16))
-                .maxMessageSize(MAX_MESSAGE_SIZE)
-                .sslContext(GrpcSslContexts
-                        .forServer(loadCert("server1.pem"),loadCert("server1.key"))
-                        .trustManager(serverTrustedCaCerts)
-                        .clientAuth(ClientAuth.REQUIRE)
-                        .sslProvider(SslProvider.OPENSSL)
-                        .build()
-                ).addService(new GreeterImpl())
-                .build()
-                .start();
+//        X509Certificate[] serverTrustedCaCerts = {
+//                loadX509Cert("ca.pem")
+//        };
+//        server = NettyServerBuilder.forPort(port)
+//                .executor(Executors.newFixedThreadPool(16))
+//                .maxMessageSize(MAX_MESSAGE_SIZE)
+//                .sslContext(GrpcSslContexts
+//                        .forServer(loadCert("server1.pem"),loadCert("server1.key"))
+//                        .trustManager(serverTrustedCaCerts)
+//                        .clientAuth(ClientAuth.REQUIRE)
+//                        .sslProvider(SslProvider.OPENSSL)
+//                        .build()
+//                ).addService(new GreeterImpl())
+//                .build()
+//                .start();
+//        server =NettyServerBuilder.forAddress(new InetSocketAddress("192.168.12.177",this.port))
+            server = ServerBuilder
+                    .forPort(this.port)
+                    .addService(new GreeterImpl())
+                    .build()
+                    .start();
         System.out.println("service start.....");
 
         Runtime.getRuntime().addShutdownHook(new Thread(){

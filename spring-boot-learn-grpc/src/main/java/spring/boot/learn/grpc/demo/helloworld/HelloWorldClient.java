@@ -4,6 +4,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NegotiationType;
 import io.grpc.netty.NettyChannelBuilder;
@@ -36,23 +37,23 @@ public class HelloWorldClient {
 
 
     public HelloWorldClient(String host,int port) throws IOException, CertificateException {
-//        channel = ManagedChannelBuilder.forAddress(host,port)
-//                .usePlaintext(true)
-//                .build();
-        X509Certificate[] clientTrustedCaCerts = {
-                loadX509Cert("ca.pem")
-        };
-        channel = NettyChannelBuilder.forAddress(host, port)
-//                .overrideAuthority("foo.test.google.fr")
-                .negotiationType(NegotiationType.TLS)
-                .executor(Executors.newFixedThreadPool(1))
-                .sslContext(GrpcSslContexts
-                        .forClient()
-                        .keyManager(loadCert("client.pem"), loadCert("client.key"))
-                        .trustManager(clientTrustedCaCerts)
-                        .sslProvider(SslProvider.OPENSSL)
-                        .build())
+        channel = ManagedChannelBuilder.forAddress(host,port)
+                .usePlaintext(true)
                 .build();
+//        X509Certificate[] clientTrustedCaCerts = {
+//                loadX509Cert("ca.pem")
+//        };
+//        channel = NettyChannelBuilder.forAddress(host, port)
+////                .overrideAuthority("foo.test.google.fr")
+//                .negotiationType(NegotiationType.TLS)
+//                .executor(Executors.newFixedThreadPool(1))
+//                .sslContext(GrpcSslContexts
+//                        .forClient()
+//                        .keyManager(loadCert("client.pem"), loadCert("client.key"))
+//                        .trustManager(clientTrustedCaCerts)
+//                        .sslProvider(SslProvider.OPENSSL)
+//                        .build())
+//                .build();
         blockingStub = GreeterGrpc.newBlockingStub(channel);
         futureStub = GreeterGrpc.newFutureStub(channel);
         stub = GreeterGrpc.newStub(channel);
@@ -121,7 +122,8 @@ public class HelloWorldClient {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException, CertificateException {
-        HelloWorldClient client = new HelloWorldClient("foo.test.google.fr", 50051);
+//        HelloWorldClient client = new HelloWorldClient("foo.test.google.fr", 50051);  //ssl调用的
+        HelloWorldClient client = new HelloWorldClient("127.0.0.1", 50051);
 
         client.asyncGreet(Thread.currentThread().getName() +"_world_async:\t" + UUID.randomUUID().toString());
         System.out.println("async greet finish");
