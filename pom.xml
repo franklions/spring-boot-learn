@@ -26,6 +26,7 @@
         <module>spring-boot-learn-rpc</module>
         <module>spring-boot-learn-grpc</module>
         <module>spring-boot-learn-protobuf</module>
+        <module>spring-boot-learn-grpc-client</module>
     </modules>
 
     <parent>
