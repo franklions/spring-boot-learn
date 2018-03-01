@@ -1,5 +1,6 @@
 package async.completable.future.demo.thread;
 
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,7 +25,7 @@ public class ExecutorServiceTest {
 
 
         final long waitTime = 60 * 1000;
-        final long awaitTime = 5 * 1000;
+        final long awaitTime = 20 * 1000;
 
         Runnable task1 = new Runnable(){
             public void run(){
@@ -79,5 +80,10 @@ public class ExecutorServiceTest {
         }
 
         System.out.println(" main end");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
