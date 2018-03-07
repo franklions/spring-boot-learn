@@ -28,6 +28,7 @@
         <module>spring-boot-learn-protobuf</module>
         <module>spring-boot-learn-grpc-client</module>
         <module>spring-boot-learn-consul</module>
+        <module>spring-boot-learn-docker-demo</module>
     </modules>
 
     <parent>
