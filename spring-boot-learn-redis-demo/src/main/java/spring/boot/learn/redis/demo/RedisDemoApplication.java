@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import spring.boot.learn.redis.demo.service.CatchService;
+import spring.boot.learn.redis.demo.service.LuaScriptService;
 
 /**
  * @author Administrator
@@ -28,6 +29,9 @@ public class RedisDemoApplication implements CommandLineRunner {
     @Autowired
      CatchService catchService3;
 
+    @Autowired
+    LuaScriptService luaScriptService;
+
     public static void main(String[] args) {
       ApplicationContext ctx =  SpringApplication.run(RedisDemoApplication.class,args);
         CatchService catchService = ctx.getBean(CatchService.class);
@@ -37,14 +41,16 @@ public class RedisDemoApplication implements CommandLineRunner {
         catchService.setCatch();
         System.out.println("====================分割线==================");
         System.out.println(">>>>>>>>>>>>>>>>>run finish>>>>>>>>>>>>");
+
+
     }
 
-    @Bean
-    @Scope("prototype")
-    @ConditionalOnMissingBean(CatchService.class)
-    public CatchService catchService(StringRedisTemplate redisTemplate){
-        return new CatchService(redisTemplate);
-    }
+//    @Bean
+//    @Scope("prototype")
+//    @ConditionalOnMissingBean(CatchService.class)
+//    public CatchService catchService(StringRedisTemplate redisTemplate){
+//        return new CatchService(redisTemplate);
+//    }
 
     @Override
     public void run(String... strings) throws Exception {
@@ -52,5 +58,7 @@ public class RedisDemoApplication implements CommandLineRunner {
         catchService4.showName();
         catchService3.showName();
         System.out.println("====================分割线==================");
+       Boolean retval =  luaScriptService.checkAndSet("adsfadsfasdf","1231231231");
+        System.out.println("return value:\t"+retval);
     }
 }

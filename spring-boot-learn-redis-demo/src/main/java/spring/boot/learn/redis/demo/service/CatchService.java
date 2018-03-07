@@ -15,6 +15,7 @@ import java.util.UUID;
  * @date 2017/4/20
  * @since Jdk 1.8
  */
+@Component
 public class CatchService {
 
     private StringRedisTemplate redisTemplate;

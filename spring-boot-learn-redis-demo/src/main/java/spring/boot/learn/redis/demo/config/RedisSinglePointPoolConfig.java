@@ -14,7 +14,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * @date 2017/6/1
  * @since Jdk 1.8
  */
-@Configuration
+//@Configuration
 public class RedisSinglePointPoolConfig {
     @Bean
     public JedisConnectionFactory getJedisConnectionFactory(){

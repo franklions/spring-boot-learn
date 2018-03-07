@@ -18,7 +18,7 @@ import java.util.Set;
  * @date 2017/6/1
  * @since Jdk 1.8
  */
-@Configuration
+//@Configuration
 public class RedisClusterConfig {
     @Bean
     public JedisConnectionFactory getJedisConnectionFactory(){

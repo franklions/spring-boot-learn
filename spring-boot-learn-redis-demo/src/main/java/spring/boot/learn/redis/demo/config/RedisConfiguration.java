@@ -20,8 +20,8 @@ import spring.boot.learn.redis.demo.service.RedisMessageSubscriber;
  * @date 2017/5/26
  * @since Jdk 1.8
  */
-@Configuration
-@EnableConfigurationProperties(CustomRedisProperties.class)
+//@Configuration
+//@EnableConfigurationProperties(CustomRedisProperties.class)
 public class RedisConfiguration {
 
     @Autowired
