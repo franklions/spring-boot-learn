@@ -58,7 +58,7 @@ public class RedisDemoApplication implements CommandLineRunner {
         catchService4.showName();
         catchService3.showName();
         System.out.println("====================分割线==================");
-       Boolean retval =  luaScriptService.checkAndSet("adsfadsfasdf","1231231231");
+       Boolean retval =  luaScriptService.checkAndSet("myappid","1231231231");
         System.out.println("return value:\t"+retval);
     }
 }

@@ -2,15 +2,12 @@ package spring.boot.learn.redis.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.core.script.DefaultScriptExecutor;
 import org.springframework.data.redis.core.script.RedisScript;
-import org.springframework.data.redis.core.script.ScriptExecutor;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Component;
 
-import javax.script.ScriptException;
 import java.util.Collections;
 
 /**
@@ -25,7 +22,7 @@ public class LuaScriptService {
 
 
     @Autowired
-    RedisTemplate redisTemplate;
+    StringRedisTemplate redisTemplate;
 
 
     private RedisScript<Boolean> checkAndSetScript(){
@@ -33,6 +30,7 @@ public class LuaScriptService {
         redisScript.setScriptSource(new ResourceScriptSource(
                 new ClassPathResource("lua-scripts/checkandset.lua")));
         redisScript.setResultType(Boolean.class);
+        System.out.println( redisScript.getSha1());
         return redisScript;
     }
 
