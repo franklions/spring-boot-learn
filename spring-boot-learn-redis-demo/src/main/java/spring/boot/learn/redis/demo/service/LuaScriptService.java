@@ -8,7 +8,9 @@ import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.UUID;
 
 /**
  * @author flsh
@@ -30,12 +32,29 @@ public class LuaScriptService {
         redisScript.setScriptSource(new ResourceScriptSource(
                 new ClassPathResource("lua-scripts/checkandset.lua")));
         redisScript.setResultType(Boolean.class);
-        System.out.println( redisScript.getSha1());
+        System.out.println( "sha1: "+redisScript.getSha1());
         return redisScript;
     }
 
     public Boolean checkAndSet(String expectedValue, String newValue) {
         return (Boolean)redisTemplate.execute(checkAndSetScript(),
                 Collections.singletonList("appid_fakesmarthub001"), expectedValue, newValue);
+    }
+
+    private RedisScript<ArrayList> rateLimitApiCallScript(){
+        DefaultRedisScript<ArrayList> redisScript = new DefaultRedisScript<ArrayList>();
+        redisScript.setScriptSource(new ResourceScriptSource(
+                new ClassPathResource("lua-scripts/rate_limit_api_call.lua")));
+        redisScript.setResultType(ArrayList.class);
+        return redisScript;
+    }
+
+    public void handleExpiration(String key){
+       ArrayList<Integer> retval =  redisTemplate.execute(rateLimitApiCallScript(),
+                Collections.singletonList(key), "60","10");
+    }
+
+    public  String getUUID(){
+       return  UUID.randomUUID().toString().replaceAll("-","");
     }
 }

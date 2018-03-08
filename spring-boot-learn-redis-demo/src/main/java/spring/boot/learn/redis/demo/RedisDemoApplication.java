@@ -13,6 +13,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import spring.boot.learn.redis.demo.service.CatchService;
 import spring.boot.learn.redis.demo.service.LuaScriptService;
 
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Administrator
  * @version 1.0
@@ -60,5 +64,31 @@ public class RedisDemoApplication implements CommandLineRunner {
         System.out.println("====================分割线==================");
        Boolean retval =  luaScriptService.checkAndSet("myappid","1231231231");
         System.out.println("return value:\t"+retval);
+
+        Thread check = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<String> keys = new ArrayList<>();
+                keys.clear();
+                for (int i =1;i<100000;i++) {
+                    keys.add(luaScriptService.getUUID());
+                }
+
+                while (true){
+                    for(String key :keys){
+                        System.out.println(key);
+                        luaScriptService.handleExpiration(key);
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        check.setDaemon(true);
+        check.start();
+        System.in.read();
     }
 }

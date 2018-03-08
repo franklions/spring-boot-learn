@@ -19,7 +19,7 @@ public class RedisSinglePointConfig {
     public JedisConnectionFactory getJedisConnectionFactory(){
         JedisConnectionFactory jedisConnectionFactory=new JedisConnectionFactory();
         jedisConnectionFactory.setPort(6379);
-        jedisConnectionFactory.setHostName("127.0.0.1");
+        jedisConnectionFactory.setHostName("192.168.12.76");
         return jedisConnectionFactory;
     }
 
