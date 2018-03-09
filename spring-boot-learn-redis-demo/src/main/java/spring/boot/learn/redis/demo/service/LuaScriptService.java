@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author flsh
@@ -32,7 +33,6 @@ public class LuaScriptService {
         redisScript.setScriptSource(new ResourceScriptSource(
                 new ClassPathResource("lua-scripts/checkandset.lua")));
         redisScript.setResultType(Boolean.class);
-        System.out.println( "sha1: "+redisScript.getSha1());
         return redisScript;
     }
 
@@ -56,5 +56,14 @@ public class LuaScriptService {
 
     public  String getUUID(){
        return  UUID.randomUUID().toString().replaceAll("-","");
+    }
+
+    public void handleExpirationByCommand(String key) {
+        Long current = redisTemplate.boundValueOps(key).increment(1L);
+        Long remTime = redisTemplate.getExpire(key);
+        if(remTime ==null || remTime <1) {
+            redisTemplate.expire(key,60, TimeUnit.SECONDS);
+        }
+        Long retval =Math.max(-1,10 -current);
     }
 }
