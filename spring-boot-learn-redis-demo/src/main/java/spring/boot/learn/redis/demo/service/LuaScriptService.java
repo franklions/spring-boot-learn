@@ -54,6 +54,20 @@ public class LuaScriptService {
                 Collections.singletonList(key), "60","10");
     }
 
+    private RedisScript<Long> rateLimitApiIncrbyScript(){
+        DefaultRedisScript<Long> redisScript = new DefaultRedisScript<Long>();
+        redisScript.setScriptSource(new ResourceScriptSource(
+                new ClassPathResource("lua-scripts/rate_limit_api_incrby.lua")));
+        redisScript.setResultType(Long.class);
+        return redisScript;
+    }
+
+    public void handleExpirationIncrby(String key){
+        long retval =  redisTemplate.execute(rateLimitApiIncrbyScript(),
+                Collections.singletonList(key), "60","10");
+        System.out.println(retval);
+    }
+
     public  String getUUID(){
        return  UUID.randomUUID().toString().replaceAll("-","");
     }

@@ -65,57 +65,59 @@ public class RedisDemoApplication implements CommandLineRunner {
        Boolean retval =  luaScriptService.checkAndSet("myappid","1231231231");
         System.out.println("return value:\t"+retval);
 
-        Thread check = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<String> keys = new ArrayList<>();
-                keys.clear();
-                for (int i =1;i<100000;i++) {
-                    keys.add(luaScriptService.getUUID());
-                }
-
-                while (true){
-                    Long beginTime = System.currentTimeMillis();
-                    for(String key :keys){
-                        luaScriptService.handleExpiration(key);
-                    }
-                    System.out.println("执行Lua脚本用时："+(System.currentTimeMillis() - beginTime));
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        check.setDaemon(true);
-        check.start();
-
-        Thread rate = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<String> keys = new ArrayList<>();
-                keys.clear();
-                for (int i =1;i<100000;i++) {
-                    keys.add(luaScriptService.getUUID() + "_quota");
-                }
-
-                while (true){
-                    Long beginTime = System.currentTimeMillis();
-                    for(String key :keys){
-                        luaScriptService.handleExpirationByCommand(key);
-                    }
-                    System.out.println("执行Redis指令用时："+(System.currentTimeMillis() - beginTime));
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        rate.setDaemon(true);
-        rate.start();
+        luaScriptService.handleExpirationIncrby(luaScriptService.getUUID());
+//
+//        Thread check = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                List<String> keys = new ArrayList<>();
+//                keys.clear();
+//                for (int i =1;i<100000;i++) {
+//                    keys.add(luaScriptService.getUUID());
+//                }
+//
+//                while (true){
+//                    Long beginTime = System.currentTimeMillis();
+//                    for(String key :keys){
+//                        luaScriptService.handleExpiration(key);
+//                    }
+//                    System.out.println("执行Lua脚本用时："+(System.currentTimeMillis() - beginTime));
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//        check.setDaemon(true);
+//        check.start();
+//
+//        Thread rate = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                List<String> keys = new ArrayList<>();
+//                keys.clear();
+//                for (int i =1;i<100000;i++) {
+//                    keys.add(luaScriptService.getUUID() + "_quota");
+//                }
+//
+//                while (true){
+//                    Long beginTime = System.currentTimeMillis();
+//                    for(String key :keys){
+//                        luaScriptService.handleExpirationByCommand(key);
+//                    }
+//                    System.out.println("执行Redis指令用时："+(System.currentTimeMillis() - beginTime));
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+//        rate.setDaemon(true);
+//        rate.start();
         System.in.read();
     }
 }
