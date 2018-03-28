@@ -338,6 +338,12 @@ public class RSAUtils {
         return Base64Utils.encode(key.getEncoded());
     }
 
+    public static String getPrivateKeyHex(Map<String, Object> keyMap) throws Exception {
+        Key key = (Key) keyMap.get(PRIVATE_KEY);
+        System.out.println(key.getFormat());
+        return Base64Utils.hexEncode(key.getEncoded());
+    }
+
 
 
     /** */
