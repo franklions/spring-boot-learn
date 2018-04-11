@@ -1,6 +1,7 @@
 package spring.boot.learn.redis.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -18,18 +19,22 @@ import java.util.UUID;
 @Component
 public class CatchService {
 
-    private StringRedisTemplate redisTemplate;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    @Qualifier("redisTemplate")
+    private RedisTemplate localRedisTemplate;
 
     private String name ;
-    public CatchService(StringRedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
+    public CatchService() {
         this.name = UUID.randomUUID().toString();
     }
 
     public void setCatch(){
-        redisTemplate.opsForValue().set("test","test");
-        redisTemplate.convertAndSend("topicQueue","messageinfo");
+        stringRedisTemplate.opsForValue().set("test","test");
+        stringRedisTemplate.convertAndSend("topicQueue","messageinfo");
+        localRedisTemplate.opsForValue().set("abc","abc");
     }
 
     public void showName() {

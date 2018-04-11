@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import spring.boot.learn.redis.demo.service.CatchService;
 import spring.boot.learn.redis.demo.service.LuaScriptService;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class RedisDemoApplication implements CommandLineRunner {
     @Autowired
     LuaScriptService luaScriptService;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
       ApplicationContext ctx =  SpringApplication.run(RedisDemoApplication.class,args);
         CatchService catchService = ctx.getBean(CatchService.class);
         catchService.showName();
@@ -46,7 +47,7 @@ public class RedisDemoApplication implements CommandLineRunner {
         System.out.println("====================分割线==================");
         System.out.println(">>>>>>>>>>>>>>>>>run finish>>>>>>>>>>>>");
 
-
+        System.in.read();
     }
 
 //    @Bean
@@ -62,10 +63,10 @@ public class RedisDemoApplication implements CommandLineRunner {
         catchService4.showName();
         catchService3.showName();
         System.out.println("====================分割线==================");
-       Boolean retval =  luaScriptService.checkAndSet("myappid","1231231231");
-        System.out.println("return value:\t"+retval);
-
-        luaScriptService.handleExpirationIncrby(luaScriptService.getUUID());
+//       Boolean retval =  luaScriptService.checkAndSet("myappid","1231231231");
+//        System.out.println("return value:\t"+retval);
+//
+//        luaScriptService.handleExpirationIncrby(luaScriptService.getUUID());
 //
 //        Thread check = new Thread(new Runnable() {
 //            @Override
@@ -118,6 +119,6 @@ public class RedisDemoApplication implements CommandLineRunner {
 //        });
 //        rate.setDaemon(true);
 //        rate.start();
-        System.in.read();
+
     }
 }

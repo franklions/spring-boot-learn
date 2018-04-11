@@ -12,6 +12,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import spring.boot.learn.bean.demo.component.TestBean2;
 import spring.boot.learn.bean.demo.service.CatchService;
 
+import java.io.IOException;
+
 /**
  * @author Administrator
  * @version 1.0
@@ -30,7 +32,7 @@ public class BeanDemoApplication implements CommandLineRunner {
     @Autowired
     TestBean2 testBean2;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ApplicationContext ctx =  SpringApplication.run(BeanDemoApplication.class,args);
         CatchService catchService = ctx.getBean(CatchService.class);
         catchService.showName();
@@ -40,6 +42,7 @@ public class BeanDemoApplication implements CommandLineRunner {
         System.out.println("====================分割线==================");
         System.out.println(">>>>>>>>>>>>>>>>>run finish>>>>>>>>>>>>");
 
+        System.in.read();
     }
 
     @Bean
@@ -56,6 +59,5 @@ public class BeanDemoApplication implements CommandLineRunner {
         catchService3.showName();
         System.out.println("====================分割线==================");
         testBean2.print();
-
     }
 }

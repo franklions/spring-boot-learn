@@ -1,6 +1,7 @@
 package spring.boot.learn.bean.demo.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import spring.boot.learn.bean.demo.component.TestBean2;
 public class MulitBeanInstance {
 
     @Bean("test1")
+    @ConditionalOnMissingBean(name="test1")
      TestBean1 testBean1(){
         TestBean1 t1 = new TestBean1("t1");
         t1.setParms("t1");
@@ -25,6 +27,7 @@ public class MulitBeanInstance {
     }
 
     @Bean("test1_s")
+    @ConditionalOnMissingBean(name="test1_s")
      TestBean1 testBean1_s(){
         TestBean1 t1 = new TestBean1("t1_s");
         t1.setParms("t1_s");
