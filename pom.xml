@@ -30,6 +30,7 @@
         <module>spring-boot-learn-consul</module>
         <module>spring-boot-learn-docker-demo</module>
         <module>spring-boot-learn-threadlocal</module>
+        <module>spring-boot-learn-aop</module>
     </modules>
 
     <parent>
