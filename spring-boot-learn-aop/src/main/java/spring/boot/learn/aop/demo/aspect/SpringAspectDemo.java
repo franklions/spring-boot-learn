@@ -3,6 +3,7 @@ package spring.boot.learn.aop.demo.aspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -16,7 +17,9 @@ import java.util.Arrays;
  */
 @Component
 @Aspect
-public class SpringAspectDemo {
+public class SpringAspectDemo implements Ordered {
+
+    private int order = Ordered.LOWEST_PRECEDENCE;
 
     @Pointcut("execution(* spring.boot.learn.aop.demo.service.*.spring*(..))")
     public void executeService(){}
@@ -65,5 +68,14 @@ public class SpringAspectDemo {
                 "."+point.getSignature().getName());
         System.out.println("@After:参数为："+ Arrays.toString(point.getArgs()));
         System.out.printf("@After:被织入的目标对象为："+ point.getTarget());
+    }
+
+    @Override
+    public int getOrder() {
+        return this.order;
+    }
+
+    public void setOrder(int order){
+        this.order = order;
     }
 }
