@@ -4,8 +4,10 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
@@ -44,6 +46,8 @@ public class WebLogInterceptor {
             throws Exception {
         String targetName = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
+        String[] paramNameArr = ((MethodSignature)joinPoint.getSignature()).getParameterNames();
+        System.out.println("=====调用方法的参数名称："+paramNameArr.toString());
         System. out.println("====调用" +methodName+"方法-开始！");
         Object[] arguments = joinPoint.getArgs();   //获得参数列表
         System.out.println("打印出方法调用时传入的参数，可以在这里通过添加参数的类型，进行一些简易逻辑处理和判断");
@@ -63,6 +67,8 @@ public class WebLogInterceptor {
                 Class[] tmpCs = m.getParameterTypes();
                 if (tmpCs.length == arguments.length) {
                     LogEnable methodCache = m.getAnnotation(LogEnable.class);
+                    Annotation[][] annotations = m.getParameterAnnotations();
+
                     methode = methodCache.moduleName();
                     break;
                 }
