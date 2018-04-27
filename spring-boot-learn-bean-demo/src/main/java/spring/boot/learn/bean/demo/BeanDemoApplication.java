@@ -1,5 +1,6 @@
 package spring.boot.learn.bean.demo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,7 @@ import spring.boot.learn.bean.demo.component.TestBean2;
 import spring.boot.learn.bean.demo.service.CatchService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author Administrator
@@ -31,6 +33,9 @@ public class BeanDemoApplication implements CommandLineRunner {
 
     @Autowired
     TestBean2 testBean2;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     public static void main(String[] args) throws IOException {
         ApplicationContext ctx =  SpringApplication.run(BeanDemoApplication.class,args);
@@ -52,6 +57,8 @@ public class BeanDemoApplication implements CommandLineRunner {
         return new CatchService(redisTemplate);
     }
 
+
+
     @Override
     public void run(String... strings) throws Exception {
 
@@ -59,5 +66,6 @@ public class BeanDemoApplication implements CommandLineRunner {
         catchService3.showName();
         System.out.println("====================分割线==================");
         testBean2.print();
+        objectMapper.writeValueAsString(new ArrayList<String>(){{add("abc");}});
     }
 }
