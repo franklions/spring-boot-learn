@@ -57,7 +57,15 @@ public class BeanDemoApplication implements CommandLineRunner {
         return new CatchService(redisTemplate);
     }
 
+    @Bean(name = "myObjectMapper")
+    ObjectMapper myObjectMapper(){
+        return new ObjectMapper();
+    }
 
+    @Bean
+    ObjectMapper objectMapper(){
+        return new ObjectMapper();
+    }
 
     @Override
     public void run(String... strings) throws Exception {
