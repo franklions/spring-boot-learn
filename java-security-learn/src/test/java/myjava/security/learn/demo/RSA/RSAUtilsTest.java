@@ -157,5 +157,24 @@ public class RSAUtilsTest {
      }
 
 
+     @Test
+    public void privateToString(){
+        String privateKey="MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALQV2nswPfHiSmfnQdJZnzvTnPUsEpVCwbycycQUiKlYs1gMeP1oxGyQJvIFp48v9Io7QfWaE9jp9vkP3ypehj/GGG5PkxpE8JhvNTMGLQhlrqqxMdp0qntDU6croLcuiop/IS1MKXFxqkv8LyJY6L+GgUr4UYbwv1Pa1dP83CpfAgMBAAECgYANoRnH+P63L8kx0+7HXMEQZhOa+prtcP/4pmUe0e8F4hCwuUDu7N7w2HgaGRN1Ysu/KnzzeZXG9O4cK3dYXY8LY/zWZlo3Ax4p345Ubd5o8n30341X5O6O21d+thPKZhVGpBnKW39DI69z33HxqfjwLGaORxPBWRlFgkBiTuhWAQJBAObNA5kkm3mEgrD0gh0i1DxUlLZPtzLDXn/xF9YxyqqXKJGhP961WjhuNs4DTGV8bfTQvpwgCHwkjmMY3pgPPRkCQQDHv1HGFxiIQ8aVXWN7D6HyfgqMHGK6IzNf9dxCT4THrwJ53VK6lTF/S2IJiRg55TBC5AXgN6pituuvlrxzHZo3AkBqCNRXXk8jk/JrE9pXQnIZSY6M97Cl3MYkp4IZAQUoPIwB5AAw9EZ/2HrLSQ6nLXRi3ihEGB9t0WmtM3bIi2+5AkEAiv3LBh8eF/upXFf+mCwZkaY46qP54vIJlrV7Db1NdLGH9IqYPXMBXUV0M5RtAiRDv9fxasLxUf1c5PLrsOKhYwJAL13H3uGIvoXIOlBuXDyG7L/XE/nOTgO1oN1JH4/zd75aMlEAuslLMu1Q1Thu1TeMN1vLbaMRolYsajEGykjcXA==";
+         StringBuffer stringBuffer = new StringBuffer();
+         stringBuffer.append("-----BEGIN PRIVATE KEY-----");
+         stringBuffer.append("\n");
+         privateKey =privateKey.replace("\r","").replace("\n","");
+         for(int index=0;index <privateKey.length();index +=64){
+             if(index+64 <= privateKey.length()) {
+                 stringBuffer.append(privateKey.substring(index, index + 64));
+             }else{
+                 stringBuffer.append(privateKey.substring(index,privateKey.length()));
+             }
+             stringBuffer.append("\n");
+         }
+         stringBuffer.append("-----END PRIVATE KEY-----");
+         System.out.println(stringBuffer.toString());
+     }
+
 
 }
