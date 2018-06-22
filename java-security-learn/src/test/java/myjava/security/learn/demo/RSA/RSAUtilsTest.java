@@ -59,7 +59,7 @@ public class RSAUtilsTest {
 
     @org.junit.Test
     public void sign() throws Exception {
-        String content = "8f8c733bf4ab4a039d85d7d1d470759b";
+        String content = "bfee0bad9a2b4e8c807c9a9d2e29e28c";
 //        String privateKey =
 //                "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJ9oWHUogZ8ue6/Z\n" +
 //                        "1UuSgXAjtWI6PkXWpvmXSxuHtqrZ4Bk++yPJzHeEKs0QHYO9ZpXouanKT5ecxumT\n" +
@@ -75,23 +75,24 @@ public class RSAUtilsTest {
 //                        "i/OF8XV4ZXuFIvN6e7rct4YQjb/OINAWcF2gQWoeuc1U2uXm7nBKiQJAR44RxrrC\n" +
 //                        "7Uw4WYNHvjCacaW/BeZjoO2ZMBW38nZBKTqNs3YLzuxVLdL3Dph+Z5x0qlbUMw6C\n" +
 //                        "2SKlPisT60BVhA==";
-        String privateKey = "MIICWwIBAAKBgQCnRM8DbxarBZl9F+Yj8q32AWLkc95ffAY4kJBDC6jDFKiquAJw\n" +
-                "5QbN1poVj5ont2VXrKDh397OI+AIxa/aB4lrQp5iYAVwsR+xnbG0crLRh8aeLz0W\n" +
-                "U9V2EIDqzqGj08eTdY4gkD0C2sIc2afkcrog0N70kO15aIt/MD5ciyIRKQIDAQAB\n" +
-                "AoGAAvEiNaHrONAnu5wt/2KHThUG05R4zB52+uEKsy3YprBi/w2uzU7Z6HORJjaZ\n" +
-                "CYB07IPWwzeYHZwNQVo+FjbyYxngg30mpkZS1MT23S3lqtgVYoKSQpC+/Gt0f1hC\n" +
-                "Lg9qI26BSjAsVNPMu91KAI5CzqGSn/pYmorosCl/NuEIKwECQQCzf6ahzcparjr3\n" +
-                "b9UZM+uXA+Ea2znvltBIGUoduKYxBdT2oQdvzn/6x8sa/9NAwNb0zUChX8VC4vw9\n" +
-                "dhz4kl85AkEA7o7PNrWhYjDQRc1QvpUXTPPpXCtq5n3CaLNn9prkHGuIKXthWjVu\n" +
-                "23w+o70gYx+8FFmc6yFrtGnKkcqukI1RcQJAdETEV9yoLZLcCTj8TOXvvZM6tZ25\n" +
-                "anNDGOCgvJ3FsM15RAPMgGS/S18tNaDuYuxGkK1/JsiVSx0ijGE8pNqTKQJAeyk5\n" +
-                "q8or7pC7Bj6Q4EQCypTmttInl6X3t6xgET44ZL/ThW8QfM03VZOYl1puHR7mMC9v\n" +
-                "xyjy/SrdDVXxt+lt0QJAW4XPpSJ0KdebrwTY9+K8sruXBvPpEXNlLod0/ItVkENs\n" +
-                "lZbaUSEqaMtdP9WqLzqOomPX/Nx8wxfHUqMuffo0pw==";
+        String privateKey = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALQV2nswPfHiSmfn\n" +
+                "QdJZnzvTnPUsEpVCwbycycQUiKlYs1gMeP1oxGyQJvIFp48v9Io7QfWaE9jp9vkP\n" +
+                "3ypehj/GGG5PkxpE8JhvNTMGLQhlrqqxMdp0qntDU6croLcuiop/IS1MKXFxqkv8\n" +
+                "LyJY6L+GgUr4UYbwv1Pa1dP83CpfAgMBAAECgYANoRnH+P63L8kx0+7HXMEQZhOa\n" +
+                "+prtcP/4pmUe0e8F4hCwuUDu7N7w2HgaGRN1Ysu/KnzzeZXG9O4cK3dYXY8LY/zW\n" +
+                "Zlo3Ax4p345Ubd5o8n30341X5O6O21d+thPKZhVGpBnKW39DI69z33HxqfjwLGaO\n" +
+                "RxPBWRlFgkBiTuhWAQJBAObNA5kkm3mEgrD0gh0i1DxUlLZPtzLDXn/xF9YxyqqX\n" +
+                "KJGhP961WjhuNs4DTGV8bfTQvpwgCHwkjmMY3pgPPRkCQQDHv1HGFxiIQ8aVXWN7\n" +
+                "D6HyfgqMHGK6IzNf9dxCT4THrwJ53VK6lTF/S2IJiRg55TBC5AXgN6pituuvlrxz\n" +
+                "HZo3AkBqCNRXXk8jk/JrE9pXQnIZSY6M97Cl3MYkp4IZAQUoPIwB5AAw9EZ/2HrL\n" +
+                "SQ6nLXRi3ihEGB9t0WmtM3bIi2+5AkEAiv3LBh8eF/upXFf+mCwZkaY46qP54vIJ\n" +
+                "lrV7Db1NdLGH9IqYPXMBXUV0M5RtAiRDv9fxasLxUf1c5PLrsOKhYwJAL13H3uGI\n" +
+                "voXIOlBuXDyG7L/XE/nOTgO1oN1JH4/zd75aMlEAuslLMu1Q1Thu1TeMN1vLbaMR\n" +
+                "olYsajEGykjcXA==";
 
-        System.out.println(Base64Utils.hexEncode(Base64Utils.decode( privateKey.replace("\n",""))));
-//        String mi= RSAUtils.sign(content.getBytes(),privateKey.replace("\n",""),"MD5");
-//        System.out.println(mi);
+//        System.out.println(Base64Utils.hexEncode(Base64Utils.decode( privateKey.replace("\n",""))));
+        String mi= RSAUtils.sign(content.getBytes(),privateKey.replace("\n",""),"MD5");
+        System.out.println(mi);
 //        String mi2Hex="9dfd7e90965470bca77dad2ac4f7b86835f2e710497c8af15d7edba96b9351ba63364192ed650b40a017e43f3c4636f1318de92f4a2b3bd7b0f1d4e561fa2f67709f51e50ad00c3942a76d44fdb05ac47407bf747d6df2dfdba4a0b713d6509ce6c4d47480812e9e7338c2dade9b98ea405d1ae14bf7fad233d2fd460f412f32";
 //        assertEquals(mi,mi2Hex);
     }
