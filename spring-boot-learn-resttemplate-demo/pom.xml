@@ -17,14 +17,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-web</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.iemylife.iot</groupId>
             <artifactId>webtoolkit</artifactId>
-            <version>0.3.4</version>
+            <version>0.6.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
