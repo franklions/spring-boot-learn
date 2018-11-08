@@ -20,11 +20,13 @@ import org.apache.commons.codec.binary.Base64;
 public class DHUtils {
     private static String src = "cakin24 security dh";
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException {
         Sender sender = new Sender();
-        Receiver receiver = new Receiver();
+        Receiver receiver = new Receiver(sender.getPublicKey());
         SecretKey senderDesKey =  sender.getDesKey(receiver.getPublicKey());
         SecretKey receiverDesKey = receiver.getDesKey(sender.getPublicKey());
+
+        System.out.println(senderDesKey.toString());
 
         if (receiverDesKey.equals(senderDesKey)) {
             System.out.println("双方密钥相同");

@@ -1,6 +1,8 @@
 package myjava.security.learn.demo.DH;
 
 import javax.crypto.*;
+import javax.crypto.interfaces.DHPublicKey;
+import javax.crypto.spec.DHParameterSpec;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
@@ -17,9 +19,23 @@ public class Receiver {
     KeyPair receiverKeypair;
     SecretKey receiverDesKey;
 
-    public Receiver() throws NoSuchAlgorithmException {
+
+    /**
+     * 接收方以发送方的公钥构造密钥
+     * @throws NoSuchAlgorithmException
+     */
+    public Receiver(byte[] sendPublicKey) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException {
+        //解析甲方的公钥
+        //转换公钥的材料
+        X509EncodedKeySpec x509KeySpec=new X509EncodedKeySpec(sendPublicKey);
+        KeyFactory senderKeyFactory = KeyFactory.getInstance("DH");
+        PublicKey senderPublicKey = senderKeyFactory.generatePublic(x509KeySpec);
+
         KeyPairGenerator receiverKeyPairGenerator = KeyPairGenerator.getInstance("DH");
-        receiverKeyPairGenerator.initialize(1024);
+        //由甲方的公钥构造乙方密钥
+        DHParameterSpec dhParamSpec=((DHPublicKey)senderPublicKey).getParams();
+        receiverKeyPairGenerator.initialize(dhParamSpec);
+        //产生密钥对f
          receiverKeypair = receiverKeyPairGenerator.generateKeyPair();
 
     }
