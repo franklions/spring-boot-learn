@@ -33,6 +33,7 @@
         <module>spring-boot-learn-aop</module>
         <module>spring-boot-learn-logging-demo</module>
         <module>spring-boot-learn-httpclient-demo</module>
+        <module>franklions-springMVC</module>
     </modules>
 
     <parent>

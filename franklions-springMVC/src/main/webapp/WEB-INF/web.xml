@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app >
+    <display-name>Franklions Web Application</display-name>
+
+
+    <servlet>
+        <servlet-name>flsmvc</servlet-name>
+        <servlet-class>com.franklions.springMVC.servlet.FLSDispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>application.properties</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>flsmvc</servlet-name>
+        <!--用一个servlet拦截所有的请求-->
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+</web-app>
