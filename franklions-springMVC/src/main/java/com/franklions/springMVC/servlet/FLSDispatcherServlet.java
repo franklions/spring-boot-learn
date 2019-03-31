@@ -130,7 +130,7 @@ public class FLSDispatcherServlet extends HttpServlet {
                     continue;
                 }
 
-                FLSRequestMapping requestMapping =  clazz.getAnnotation(FLSRequestMapping.class);
+                FLSRequestMapping requestMapping =  method.getAnnotation(FLSRequestMapping.class);
                 String url = (baseUrl + "/" + requestMapping.value()).replaceAll("/+","/");
 
                 handlerMapping.put(url,method);
