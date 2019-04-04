@@ -1,9 +1,9 @@
 package sping.boot.learn.rocketmq.consumer;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;
-import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
-import org.apache.rocketmq.client.consumer.listener.MessageListenerOrderly;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
+import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
@@ -11,17 +11,18 @@ import org.apache.rocketmq.common.message.MessageExt;
 import java.util.List;
 
 /**
+ * 死信队列处理
  * @author flsh
  * @version 1.0
  * @date 2019-04-04
  * @since Jdk 1.8
  */
-public class OrderConsumer {
+public class DLQConsumer {
     public static void main(String[] args) {
         try {
             //声明并初始化一个consumer
             //需要一个consumer group名字作为构造方法的参数，这里为concurrent_consumer
-            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("ordered_consumer");
+            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("listen_dlq_consumer");
 
             //同样也要设置NameServer地址
             consumer.setNamesrvAddr("39.107.65.249:9876;47.94.21.223:9876");
@@ -33,26 +34,20 @@ public class OrderConsumer {
             consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 
             //设置consumer所订阅的Topic和Tag
-            consumer.subscribe("TopicTestOrdered", "TagA || TagB || TagC || TagD || TagE");
+            consumer.subscribe("%DLQ%retry_consumer", "*");
 
-            //设置一个Listener，主要进行消息的逻辑处理
-            //注意这里使用的是MessageListenerOrderly这个接口
-            consumer.registerMessageListener(new MessageListenerOrderly() {
+            consumer.registerMessageListener(new MessageListenerConcurrently() {
 
                 @Override
-                public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
+                public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
+                                                                ConsumeConcurrentlyContext context) {
 
-                    System.out.println(Thread.currentThread().getName() + " Receive New Messages: " + msgs);
+                    System.out.println(Thread.currentThread().getName() + " Receive DLQ Messages: " + msgs);
 
-                    //返回消费状态
-                    //SUCCESS 消费成功
-                    //SUSPEND_CURRENT_QUEUE_A_MOMENT 消费失败，暂停当前队列的消费
-
-                    return ConsumeOrderlyStatus.SUCCESS;
+                    return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                 }
             });
 
-            //调用start()方法启动consumer
             consumer.start();
 
             System.out.println("Consumer Started.");
