@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="Content-Type" content="text/html"></meta>
+    <title>AIAR-ACTION</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/bootstrap/css/bootstrap.css}"></link>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/bootstrap/css/bootstrap-theme.css}"></link>
+    <script type="text/javascript" th:src="@{/jquery/jquery1.11.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.js}"></script>
+</head>
+<body>
+<h1>AIAR-ACTION</h1>
+<ul class="timeline">
+    <div th:each="entry,status : ${actions}">
+        <li th:attr="class=${status.odd}?'timeline-inverted':''">
+            <div class="tl-circ"></div>
+            <div class="timeline-panel">
+                <div class="tl-heading">
+                    <h4><span th:text="${entry.getInsid()}">ID</span></h4>
+                    <h4><span th:text="${entry.getInsName()}">TITLE</span></h4>
+                    <p><small class="text-muted">
+                        <span th:text="${entry.getEventId()}">EVENTID</span>
+                        <i class="glyphicon glyphicon-time"></i>
+                        <span th:text="${entry.getEventDateShort()}">CREATED</span></small></p>
+                </div>
+                <div class="tl-body">
+                    <p><img th:src="${entry.getThumbUrl()}" style="width:100px;height:100px;"></img></p>
+                    <p><a class="btn" th:data="${entry.getPicUrl()}" > <span>大图</span> </a></p>
+                </div>
+            </div>
+        </li>
+    </div>
+</ul>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" id="dialog" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <img id="img" src="" ></img>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".btn").click(function(){
+            var src = $(this).attr("data");
+            $("#img").attr("src",src);
+            $("#dialog").modal('show');
+        });
+    });
+</script>
+</html>

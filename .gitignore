@@ -4,3 +4,5 @@
 /*/target/
 /java-async-completable-future.zip
 /logs/
+/*/.idea/
+/*/*.iml
