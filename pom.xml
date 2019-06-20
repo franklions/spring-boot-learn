@@ -35,6 +35,7 @@
         <module>spring-boot-learn-httpclient-demo</module>
         <module>franklions-springMVC</module>
         <module>spring-boot-learn-rocketmq</module>
+        <module>spring-boot-learn-socket</module>
     </modules>
 
     <parent>
