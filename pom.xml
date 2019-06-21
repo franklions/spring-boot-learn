@@ -36,6 +36,7 @@
         <module>franklions-springMVC</module>
         <module>spring-boot-learn-rocketmq</module>
         <module>spring-boot-learn-socket</module>
+        <module>java-collection-learn</module>
     </modules>
 
     <parent>

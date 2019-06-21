@@ -39,7 +39,6 @@ public class MYProduce {
                     //调用producer的send()方法发送消息
                     //这里调用的是同步的方式，所以会有返回结果，同时默认发送的也是普通消息
                     SendResult sendResult = producer.send(msg);
-
                     //打印返回结果，可以看到消息发送的状态以及一些相关信息
                     System.out.println(sendResult);
                 } catch (Exception e) {

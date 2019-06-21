@@ -29,11 +29,11 @@ public class DelayProduce {
 
 
             //发送10条消息到Topic为TopicTest，tag为TagA，消息内容为“Hello RocketMQ”拼接上i的值
-            for (int i = 0; i < 10; i++) {
+//            for (int i = 0; i < 10; i++) {
                 try {
-                    Message msg = new Message("TopicTest",// topic
-                            "TagA",// tag
-                            ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET)// body
+                    Message msg = new Message("06e91681c05b43b5bd5f1c9dd0f7cb97_orderly",// topic
+                            "",// tag
+                            ("06e91681c05b43b5bd5f1c9dd0f7cb97|DZSB{\"id\":55,\"appid\":\"06e91681c05b43b5bd5f1c9dd0f7cb97\",\"insid\":\"ae584ad0844f43629895962bedf1cbf6\",\"eventId\":1558691965876,\"insName\":\"i-2ze3lc1rpbjfoapmkq6u\",\"eventDate\":1558691965876,\"picUrl\":\"https://storage.lianwukeji.com/ai/fall_service/91b524a700d84d438eb718949760c628.jpg\",\"thumbUrl\":\"https://storage.lianwukeji.com/ai/fall_thumbs/ae2c3580f314479bba6047f378072d77.jpg\",\"created\":1558691965975,\"modified\":1558691965975,\"deleted\":false,\"ts\":1558691965975}").getBytes(RemotingHelper.DEFAULT_CHARSET)// body
                     );
 
                     //调用producer的send()方法发送消息
@@ -51,7 +51,7 @@ public class DelayProduce {
                     e.printStackTrace();
                     Thread.sleep(1000);
                 }
-            }
+//            }
 
             //发送完消息之后，调用shutdown()方法关闭producer
             producer.shutdown();
