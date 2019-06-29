@@ -37,6 +37,7 @@
         <module>spring-boot-learn-rocketmq</module>
         <module>spring-boot-learn-socket</module>
         <module>java-collection-learn</module>
+        <module>java8-feature-learn</module>
     </modules>
 
     <parent>
