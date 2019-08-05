@@ -58,4 +58,13 @@ public class RequestHeaderWrapper extends HttpServletRequestWrapper {
         // create an enumeration from the set and return
         return Collections.enumeration(set);
     }
+
+    @Override
+    public Enumeration<String> getHeaders(String name) {
+        List<String> values = Collections.list(super.getHeaders(name));
+        if (customHeaders.containsKey(name)) {
+            values.add(customHeaders.get(name));
+        }
+        return Collections.enumeration(values);
+    }
 }

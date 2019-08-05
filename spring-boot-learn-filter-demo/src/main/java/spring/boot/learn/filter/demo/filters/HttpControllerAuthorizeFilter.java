@@ -241,8 +241,9 @@ public class HttpControllerAuthorizeFilter extends OncePerRequestFilter {
             }
 
             userInfo.setAppId(authTokenInfo[0]);
+            //如果修改header 注意跨域问题，否则获到不到header值
             RequestHeaderWrapper requestHeaderWrapper = new RequestHeaderWrapper(request);
-            requestHeaderWrapper.setAttribute("user", userInfo);
+            requestHeaderWrapper.putHeader("user", userInfo);
             filterChain.doFilter(requestHeaderWrapper, response);
             return;
 
