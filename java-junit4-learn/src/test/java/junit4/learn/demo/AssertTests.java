@@ -94,4 +94,14 @@ public class AssertTests {
     }
 
 
+    @Test
+    public void testSubString(){
+        String str = "000000000000000090FD9FFFFE2E9F93";
+        if(str.startsWith("0000000000000000")){
+            str = str.substring(16).toUpperCase();
+        }else{
+            str.toLowerCase();
+        }
+        System.out.println(str);
+    }
 }

@@ -38,6 +38,7 @@
         <module>spring-boot-learn-socket</module>
         <module>java-collection-learn</module>
         <module>java8-feature-learn</module>
+        <module>java-to-excel-learn</module>
     </modules>
 
     <parent>
