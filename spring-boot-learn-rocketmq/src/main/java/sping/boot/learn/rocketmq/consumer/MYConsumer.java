@@ -20,7 +20,7 @@ public class MYConsumer {
         //声明并初始化一个consumer
         //需要一个consumer group名字作为构造方法的参数，这里为concurrent_consumer
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("concurrent_consumer");
-
+        consumer.setMaxReconsumeTimes(3);
         //同样也要设置NameServer地址
         consumer.setNamesrvAddr("39.107.65.249:9876;47.94.21.223:9876");
 
@@ -41,6 +41,10 @@ public class MYConsumer {
                 @Override
                 public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
                                                                 ConsumeConcurrentlyContext context) {
+
+                    for (MessageExt msg:msgs){
+                        msg.getReconsumeTimes();
+                    }
 
                     System.out.println(Thread.currentThread().getName() + " Receive New Messages: " + msgs);
 

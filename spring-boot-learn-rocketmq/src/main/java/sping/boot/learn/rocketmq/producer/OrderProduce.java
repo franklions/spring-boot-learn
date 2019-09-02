@@ -38,7 +38,7 @@ public class OrderProduce {
 
             // 发送10条消息到Topic为TopicTestOrdered，tag为tags数组按顺序取值，
             // key值为“KEY”拼接上i的值，消息内容为“Hello RocketMQ”拼接上i的值
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 1; i++) {
 
                 int orderId = i % 10;
                 Message msg =

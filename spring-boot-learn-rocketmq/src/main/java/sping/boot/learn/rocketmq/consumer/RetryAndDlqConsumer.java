@@ -25,13 +25,16 @@ public class RetryAndDlqConsumer {
             DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("retry_consumer");
 
             //同样也要设置NameServer地址
-            consumer.setNamesrvAddr("39.107.65.249:9876;47.94.21.223:9876");
+            consumer.setNamesrvAddr("47.94.212.70:9876");
 
             //这里设置的是一个consumer的消费策略
             //CONSUME_FROM_LAST_OFFSET 默认策略，从该队列最尾开始消费，即跳过历史消息
             //CONSUME_FROM_FIRST_OFFSET 从队列最开始开始消费，即历史消息（还储存在broker的）全部消费一遍
             //CONSUME_FROM_TIMESTAMP 从某个时间点开始消费，和setConsumeTimestamp()配合使用，默认是半个小时以前
             consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
+
+            //设置重试多少次投入到死信队列
+            consumer.setMaxReconsumeTimes(3);
 
             //设置consumer所订阅的Topic和Tag
             consumer.subscribe("TopicTest", "TagA || TagB || TagC || TagD || TagE");
@@ -43,6 +46,12 @@ public class RetryAndDlqConsumer {
                 @Override
                 public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
                                                                 ConsumeConcurrentlyContext context) {
+
+                    for (MessageExt msg:msgs){
+                        //获取当前重试的次数；
+                        int retry =  msg.getReconsumeTimes();
+                        System.out.println("retry :"+retry);
+                    }
 
                     System.out.println(Thread.currentThread().getName() + " Receive New Messages: " + msgs);
 

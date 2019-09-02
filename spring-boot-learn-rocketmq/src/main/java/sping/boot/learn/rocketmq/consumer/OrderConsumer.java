@@ -24,7 +24,7 @@ public class OrderConsumer {
             DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("ordered_consumer");
 
             //同样也要设置NameServer地址
-            consumer.setNamesrvAddr("39.107.65.249:9876;47.94.21.223:9876");
+            consumer.setNamesrvAddr("47.94.212.70:9876");
 
             //这里设置的是一个consumer的消费策略
             //CONSUME_FROM_LAST_OFFSET 默认策略，从该队列最尾开始消费，即跳过历史消息
@@ -32,6 +32,8 @@ public class OrderConsumer {
             //CONSUME_FROM_TIMESTAMP 从某个时间点开始消费，和setConsumeTimestamp()配合使用，默认是半个小时以前
             consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 
+            //重试 3次
+            consumer.setMaxReconsumeTimes(3);
             //设置consumer所订阅的Topic和Tag
             consumer.subscribe("TopicTestOrdered", "TagA || TagB || TagC || TagD || TagE");
 
@@ -44,11 +46,17 @@ public class OrderConsumer {
 
                     System.out.println(Thread.currentThread().getName() + " Receive New Messages: " + msgs);
 
+                    for (MessageExt msg:msgs){
+                        //获取当前重试的次数；
+                        int retry =  msg.getReconsumeTimes();
+                        System.out.println("retry :"+retry);
+                    }
+
                     //返回消费状态
                     //SUCCESS 消费成功
                     //SUSPEND_CURRENT_QUEUE_A_MOMENT 消费失败，暂停当前队列的消费
 
-                    return ConsumeOrderlyStatus.SUCCESS;
+                    return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
                 }
             });
 

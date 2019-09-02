@@ -33,6 +33,9 @@ public class RetryConsumer {
             //CONSUME_FROM_TIMESTAMP 从某个时间点开始消费，和setConsumeTimestamp()配合使用，默认是半个小时以前
             consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 
+            //设置重试次数
+            consumer.setMaxReconsumeTimes(3);
+
             //设置consumer所订阅的Topic和Tag
             consumer.subscribe("%RETRY%retry_consumer", "*");
 
@@ -42,9 +45,14 @@ public class RetryConsumer {
                 public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
                                                                 ConsumeConcurrentlyContext context) {
 
+                    for (MessageExt msg:msgs){
+                        //获取当前重试的次数；
+                       int retry =  msg.getReconsumeTimes();
+                        System.out.println("retry :"+retry);
+                    }
                     System.out.println(Thread.currentThread().getName() + " Receive New Messages: " + msgs);
 
-                    return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
                 }
             });
 
