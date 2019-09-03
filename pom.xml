@@ -39,6 +39,7 @@
         <module>java-collection-learn</module>
         <module>java8-feature-learn</module>
         <module>java-to-excel-learn</module>
+        <module>rabbitmq-client-demo</module>
     </modules>
 
     <parent>
