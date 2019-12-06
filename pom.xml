@@ -40,6 +40,7 @@
         <module>java8-feature-learn</module>
         <module>java-to-excel-learn</module>
         <module>rabbitmq-client-demo</module>
+        <module>export-gradle-to-maven</module>
     </modules>
 
     <parent>

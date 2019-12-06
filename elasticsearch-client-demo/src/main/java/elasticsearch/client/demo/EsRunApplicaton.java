@@ -1,6 +1,7 @@
 package elasticsearch.client.demo;
 
 import elasticsearch.client.demo.domain.Employee;
+import elasticsearch.client.demo.service.ESUtils;
 import elasticsearch.client.demo.service.EmployeeService;
 
 import java.io.IOException;
@@ -16,6 +17,9 @@ import java.util.Arrays;
 public class EsRunApplicaton {
 
     public static void main(String[] args) {
+
+//        ESUtils.createIndex();
+
         EmployeeService employeeService = new EmployeeService();
 
         // 添加员工信息
