@@ -19,10 +19,10 @@ public class MYConsumer {
     public static void main(String[] args) {
         //声明并初始化一个consumer
         //需要一个consumer group名字作为构造方法的参数，这里为concurrent_consumer
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("concurrent_consumer");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("product-service-consumer");
         consumer.setMaxReconsumeTimes(3);
         //同样也要设置NameServer地址
-        consumer.setNamesrvAddr("39.107.65.249:9876;47.94.21.223:9876");
+        consumer.setNamesrvAddr("47.94.212.70:9876");
 
         //这里设置的是一个consumer的消费策略
         //CONSUME_FROM_LAST_OFFSET 默认策略，从该队列最尾开始消费，即跳过历史消息
@@ -32,7 +32,7 @@ public class MYConsumer {
 
         //设置consumer所订阅的Topic和Tag，*代表全部的Tag
         try {
-            consumer.subscribe("TopicTest", "*");
+            consumer.subscribe("odata-3630", "*");
 
             //设置一个Listener，主要进行消息的逻辑处理
             //注意这里使用的是MessageListenerConcurrently这个接口

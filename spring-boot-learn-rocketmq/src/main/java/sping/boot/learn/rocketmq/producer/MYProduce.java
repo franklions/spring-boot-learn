@@ -6,6 +6,8 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 
+import java.util.Optional;
+
 /**
  * @author flsh
  * @version 1.0
@@ -29,13 +31,12 @@ public class MYProduce {
 
 
             //发送10条消息到Topic为TopicTest，tag为TagA，消息内容为“Hello RocketMQ”拼接上i的值
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 1; i++) {
                 try {
-                    Message msg = new Message("TopicTest",// topic
-                            "TagA",// tag
-                            ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET)// body
+                    Message msg = new Message("odata-3630",// topic
+                            "",// tag
+                            ("{\"appid\":\"67d40556849b4bf8b8ba00744334f649\",\"apid\":\"aededc8329554f55\",\"did\":\"ce33d1f00f9a4d15\",\"deviceType\":13872,\"packetNum\":1,\"packetData\":\"APAAADsjY2UzM2QxZjAwZjlhNGQxNUUxMTBDMDAwMDAzNTYwMTEyMyoqKioqKioqKioqKioqKioqKioqKioNCg==\",\"ts\":1590361964146}" ).getBytes(RemotingHelper.DEFAULT_CHARSET)// body
                     );
-
                     //调用producer的send()方法发送消息
                     //这里调用的是同步的方式，所以会有返回结果，同时默认发送的也是普通消息
                     SendResult sendResult = producer.send(msg);

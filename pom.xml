@@ -41,6 +41,7 @@
         <module>java-to-excel-learn</module>
         <module>rabbitmq-client-demo</module>
         <module>export-gradle-to-maven</module>
+        <module>spring-boot-demo</module>
     </modules>
 
     <parent>
