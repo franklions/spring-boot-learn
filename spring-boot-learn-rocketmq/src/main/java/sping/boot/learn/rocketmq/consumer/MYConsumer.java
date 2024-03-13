@@ -22,7 +22,7 @@ public class MYConsumer {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("product-service-consumer");
         consumer.setMaxReconsumeTimes(3);
         //同样也要设置NameServer地址
-        consumer.setNamesrvAddr("47.94.212.70:9876");
+        consumer.setNamesrvAddr("47.95.203.60:36789");
 
         //这里设置的是一个consumer的消费策略
         //CONSUME_FROM_LAST_OFFSET 默认策略，从该队列最尾开始消费，即跳过历史消息
@@ -32,7 +32,7 @@ public class MYConsumer {
 
         //设置consumer所订阅的Topic和Tag，*代表全部的Tag
         try {
-            consumer.subscribe("odata-3630", "*");
+            consumer.subscribe("devices-new-device-info", "*");
 
             //设置一个Listener，主要进行消息的逻辑处理
             //注意这里使用的是MessageListenerConcurrently这个接口

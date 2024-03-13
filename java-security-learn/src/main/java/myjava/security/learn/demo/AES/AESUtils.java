@@ -2,9 +2,12 @@ package myjava.security.learn.demo.AES;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.SecureRandom;
+import java.security.Security;
+import java.security.spec.KeySpec;
 
 /**
  * @author flsh
@@ -49,6 +52,84 @@ public class AESUtils {
      * 密钥长度
      */
     private static final Integer DEFAULT_KEY_SIZE = 128;
+
+    static {
+        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+    }
+
+    public static byte[] AES_ECB256_Encrypt(byte[] content, byte[] keyBytes){
+        try{
+            KeyGenerator keyGenerator=KeyGenerator.getInstance(KEY_ALGORITHM);
+            keyGenerator.init(256, new SecureRandom(keyBytes));
+            SecretKey key=keyGenerator.generateKey();
+//            SecretKey key = new SecretKeySpec(keyBytes,KEY_ALGORITHM);
+            byte[]  keys =  key.getEncoded();
+            Cipher cipher=Cipher.getInstance("AES/ECB/PKCS7Padding","BC");
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            byte[] result=cipher.doFinal(content);
+            return result;
+        }catch (InvalidKeyException ex){
+            System.out.println(ex.getMessage());
+        }catch (IllegalBlockSizeException ex){
+            System.out.println(ex.getMessage());
+        }catch(BadPaddingException ex){
+            System.out.println(ex.getMessage());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            System.out.println("exception:"+e.toString());
+        }
+        return null;
+    }
+
+    public static byte[] AES_ECB256_Decrypt(byte[] content, byte[] keyBytes){
+        try{
+            KeyGenerator keyGenerator=KeyGenerator.getInstance(KEY_ALGORITHM);
+            keyGenerator.init(256, new SecureRandom(keyBytes));//key长可设为128，192，256位，这里只能设为128
+            SecretKey key=keyGenerator.generateKey();
+//            SecretKey key = new SecretKeySpec(keyBytes,KEY_ALGORITHM);
+            Cipher cipher=Cipher.getInstance("AES/ECB/PKCS7Padding","BC");
+            cipher.init(Cipher.DECRYPT_MODE, key);
+            byte[] result=cipher.doFinal(content);
+            return result;
+        }catch (InvalidKeyException ex){
+            System.out.println(ex.getMessage());
+        }catch (IllegalBlockSizeException ex){
+            System.out.println(ex.getMessage());
+        }catch(BadPaddingException ex){
+            System.out.println(ex.getMessage());
+        }catch (Exception e) {
+            // TODO Auto-generated catch block
+            System.out.println("exception:"+e.toString());
+        }
+        return null;
+    }
+
+    //TODO 测试没有成功
+    public static byte[] AES_ECB256_Encrypt(byte[] content, char[] keyBytes){
+        try{
+            String salt = "ldcs2022";
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            KeySpec spec = new PBEKeySpec(keyBytes, salt.getBytes(), 65536, 256);
+            SecretKey tmp = factory.generateSecret(spec);
+            SecretKey key = new SecretKeySpec(tmp.getEncoded(), "AES");
+//            SecretKey key = new SecretKeySpec(keyBytes,KEY_ALGORITHM);
+            byte[]  keys =  key.getEncoded();
+            Cipher cipher=Cipher.getInstance("AES/ECB/PKCS7Padding","BC");
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            byte[] result=cipher.doFinal(content);
+            return result;
+        }catch (InvalidKeyException ex){
+            System.out.println(ex.getMessage());
+        }catch (IllegalBlockSizeException ex){
+            System.out.println(ex.getMessage());
+        }catch(BadPaddingException ex){
+            System.out.println(ex.getMessage());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            System.out.println("exception:"+e.toString());
+        }
+        return null;
+    }
 
 
     public static byte[] AES_ECB_Encrypt(byte[] content, byte[] keyBytes){
